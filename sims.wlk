@@ -100,13 +100,21 @@ class Sims {
 	}
 	
 	method trabajar() {
+		if (trabajoActual == null ){
+			self.ganarDinero(0)
+			self.modificarFelicidad(0)
+			}
+		else 
 		trabajoActual.pasarUnDia(self)
-		if(personalidad == buenazo && self.trabajaConTodosSusAmigos()){
-			nivelDeFelicidad = nivelDeFelicidad * 1.1
-		}
+		self.verificar() 
 	}
 	
-	method trabajaConTodosSusAmigos(){
+	method verificar (){
+		if(personalidad == buenazo && self.trabajaConTodosSusAmigos()){
+			nivelDeFelicidad = nivelDeFelicidad * 1.1
+	}}
+	
+	method trabajaConTodosSusAmigos() {
 		return amigos.all{amigo => self.trabajanJuntos(amigo)}
 	}
 	
