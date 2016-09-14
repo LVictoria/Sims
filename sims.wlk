@@ -1,4 +1,3 @@
-
 class Sims {
 	
 	var sexo 
@@ -9,9 +8,10 @@ class Sims {
 	var personalidad
 	var dinero = 0 
 	var trabajoActual
-	
-	constructor (_sexo, _edad, _nivelDeFelicidad, _nivelDePopularidad, _personalidad)
+	var sexoPreferencia;
+	constructor (_sexo, _edad, _nivelDeFelicidad, _nivelDePopularidad, _personalidad, _sexoPreferencia)
 	 {
+	 	sexoPreferencia = _sexoPreferencia
 	 	sexo = _sexo
 	 	edad = _edad
 		nivelDeFelicidad = _nivelDeFelicidad
@@ -113,6 +113,11 @@ class Sims {
 	method trabajanJuntos(_sim){
 		return _sim.trabajo() == self.trabajo()
 	}
+	//Atracciones
+	method atraccion(_sim)
+	{
+		return sexoPreferencia == _sim.sexo && personalidad.atraccion(_sim,self)
+	}
 	
 }
 
@@ -123,6 +128,10 @@ object interesados {
 	method valorarSegun(amigo,nivelDeFelicidad) {
 		return amigo.dineroDeMisAmigos()
 	}
+	method atracciones(_simAtractivo, _sim)
+	{
+		return (_sim.dinero *2) <= _simAtractivo.dinero
+	}
 }
 
 
@@ -131,6 +140,10 @@ object superficiales {
 	method  valorarSegun(amigo,nivelDeFelicidad){
 		return 20 * amigo.nivelDeFelicidad()
 	}
+	method atracciones(_simAtractivo, _sim)
+	{
+		return _sim.amigoMasPopular().nivelDePopularidad() <= _simAtractivo.nivelDePopularidad()
+	}
 }
 
 object buenazo {
@@ -138,12 +151,20 @@ object buenazo {
 	method valorarSegun (amigo,nivelDeFelicidad) {
 		return nivelDeFelicidad * 0.5
 	}
+	method atracciones()
+	{
+		return true
+	}
 }
 
 object peleadoConLaVida {
 	
 	method valorarSegun(amigo,nivelDeFelicidad) {
 		return 0
+	}
+	method atracciones(_simAtractivo, _sim)
+	{
+		return _simAtractivo.nivelDeFelicidad < 200
 	}
 }
 
@@ -184,6 +205,10 @@ class Aburridos inherits Trabajo {
 	}
 	
 }
+
+
+
+ 
 
 
 
