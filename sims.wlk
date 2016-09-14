@@ -1,5 +1,5 @@
 
-class Sims {
+class Sim {
 	
 	var sexo 
 	var	edad
@@ -9,14 +9,16 @@ class Sims {
 	var personalidad
 	var dinero = 0 
 	var trabajoActual
+	var sexoPreferencia
 	
-	constructor (_sexo, _edad, _nivelDeFelicidad, _nivelDePopularidad, _personalidad)
+	constructor (_sexo, _edad, _nivelDeFelicidad, _nivelDePopularidad, _personalidad,_sexoPreferencia)
 	 {
 	 	sexo = _sexo
 	 	edad = _edad
 		nivelDeFelicidad = _nivelDeFelicidad
 		nivelDePopularidad = _nivelDePopularidad
 		personalidad = _personalidad
+		sexoPreferencia = _sexoPreferencia
 	 }
 	
 	
@@ -41,6 +43,10 @@ class Sims {
 	method trabajo(){
 		return trabajoActual
 	}
+	
+	method sexo() {
+		return sexo
+	}
 	//Felicidad 
 	 method modificarFelicidad(cantidad){
 	 	nivelDeFelicidad += cantidad
@@ -56,7 +62,7 @@ class Sims {
 		return amigos.max{amigo => amigo.nivelDePopularidad()}
 	}
 	
-	method soyPopular() {
+	method esPopular() {
 		return self.nivelDePopularidad() > self.amigoMasPopular().nivelDePopularidad()
 	}
 	
@@ -122,22 +128,37 @@ class Sims {
 		return _sim.trabajo() == self.trabajo()
 	}
 	
+	//Atracciones
+	
+	method atraccion(_sim)
+	{
+		return sexoPreferencia == _sim.sexo() && personalidad.atraccion(_sim,self)
+	}
+	
 }
 
 //Personalidades
 
-object interesados {
+object interesado {
 	
 	method valorarSegun(amigo,nivelDeFelicidad) {
 		return amigo.dineroDeMisAmigos()
 	}
+	
+	method atracciones(_simAtractivo, _sim){
+		return (_sim.dinero() *2) <= _simAtractivo.dinero()
+	}
 }
 
 
-object superficiales {
+object superficial {
 	
 	method  valorarSegun(amigo,nivelDeFelicidad){
 		return 20 * amigo.nivelDeFelicidad()
+	}
+	
+	method atracciones(_simAtractivo, _sim){
+		return _sim.amigoMasPopular().nivelDePopularidad() <= _simAtractivo.nivelDePopularidad()
 	}
 }
 
@@ -146,12 +167,18 @@ object buenazo {
 	method valorarSegun (amigo,nivelDeFelicidad) {
 		return nivelDeFelicidad * 0.5
 	}
+	method atracciones(){
+		return true
+	}
 }
 
 object peleadoConLaVida {
 	
 	method valorarSegun(amigo,nivelDeFelicidad) {
 		return 0
+	}
+	method atracciones(_simAtractivo, _sim) {
+		return _simAtractivo.nivelDeFelicidad() < 200
 	}
 }
 
@@ -167,7 +194,7 @@ class Trabajo {
 		
 	}
 }
-class Copados inherits Trabajo {
+class Copado inherits Trabajo {
 	constructor(_dinero,_nivelDeFelicidad)= super(_dinero,_nivelDeFelicidad)
 	method pasarUnDia(empleado) {
 		empleado.ganarDinero(_dinero)
@@ -176,7 +203,7 @@ class Copados inherits Trabajo {
 	
 }
 
-class Mercenarios inherits Trabajo {
+class Mercenario inherits Trabajo {
 	constructor(_dinero,_nivelDeFelicidad)= super(_dinero,_nivelDeFelicidad)
 	method pasarUnDia(empleado) {
 		empleado.ganarDinero(100 + empleado.dinero()*0.02)
@@ -184,7 +211,7 @@ class Mercenarios inherits Trabajo {
 	
 }
 
-class Aburridos inherits Trabajo {
+class Aburrido inherits Trabajo {
 	constructor(_dinero,_nivelDeFelicidad)= super(_dinero,_nivelDeFelicidad)
 	method pasarUnDia(empleado) {
 		empleado.ganarDinero(_dinero)
