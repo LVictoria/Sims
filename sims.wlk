@@ -14,6 +14,7 @@ class Sim {
 	var trabajoActual
 	var sexoPreferencia
 	var informaciones = {}
+	var estadoDeCelos
 
 	constructor (_sexo, _edad, _nivelDeFelicidad, _nivelDePopularidad, _personalidad, _sexoPreferencia)
 
@@ -73,7 +74,9 @@ class Sim {
 	}
 	
 	// Amistades
-	
+	method nuevosAmigos(_amigos){
+		amigos = _amigos
+	}
 	method hacerseAmigo (nuevoAmigo) {
 		amigos.add(nuevoAmigo)
 		nivelDeFelicidad += self.valorar(nuevoAmigo,self.nivelDeFelicidad())
@@ -93,9 +96,27 @@ class Sim {
 		return amigos.max{amigo => self.valorar(amigo,self.nivelDeFelicidad())}
 	}
 	
-	//Abrazos 
-	method darAbrazo(){}
- 	
+	method abrazoComun(_abrazador, _abrazado)
+	{
+		_abrazador.modificarFelicidad(2)
+		_abrazado.modificarFelicidad(4)
+	}
+
+	method abrazoProlongado(_abrazador, _abrazado)
+	{
+		if(_abrazado.atraccion(_abrazador))
+		{
+			_abrazado.estadoDeAnimo(sonador)
+			_abrazado.modificarFelicidad(1000)
+			//PIERDE EL CONOCIMIENTO
+	 }
+		}
+		else
+		{
+			_abrazado.estadoDeAnimo(incomodo)
+			_abrazado.modificarFelicidad(- 200)
+		}
+	}
  	//Dinero y Trabajo 
 	method ganarDinero(_dinero) {
 		dinero += _dinero
@@ -141,7 +162,15 @@ class Sim {
 		informaciones.add(_informacion)
 	}
 	method informacion()
-	{return informaciones}
+	{
+		return informaciones
+	}
+	//Celos
+	method ataqueDeCelos(tipoDeCelos){
+		self.modificarFelicidad(- 10)
+		tipoDeCelos.efectoCelos(self)
+		estadoDeCelos = tipoDeCelos
+	}
 }
 
 //Personalidades
@@ -231,27 +260,25 @@ class Aburrido inherits Trabajo {
 	
 }
 
+//Celos
 
-object abrazoComun
-{
-	method resultadoAbrazo(_abrazador, _abrazado)
+object celosPorPlata {
+	method efectoCelos(_Sim)
 	{
-		_abrazador.modificarFelicidad(2)
-		_abrazado.modificarFelicidad(4)
+		_Sim.nuevosAmigos(_Sim.filter{amigo => amigo.dinero() < _Sim.dinero()})
 	}
 }
-object abrazoProlongado
-{
-	method resultadoAbrazo(_abrazador, _abrazado)
+
+object celosPorPopularidad {
+	method efectoCelos(_Sim)
 	{
-		if(_abrazado.atraccion(_abrazador))
-		{
-			//_abrazado.estadoDeAnimo(sonador)
-		}
-		else
-		{
-			//_abrazado.estadoDeAnimo(incomodo)
-		}
+		_Sim.nuevosAmigos(_Sim.filter{amigo => amigo.nivelDePopularidad() < _Sim.nivelDePopularidad()})
 	}
 }
- 
+
+object celosPorPareja {
+	method efectoCelos(_Sim)
+	{
+		_Sim.nuevosAmigos(_Sim.filter{amigo => amigo.esAmigo( PAREJA )})
+	}
+}
