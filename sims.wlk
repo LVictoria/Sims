@@ -1,8 +1,8 @@
 
-class Sims {
+class Sim {
 	var sexo 
 	var	edad
-	var nivelDeFelicidad = 100
+	var nivelDeFelicidad
 	var amigos = []
 	var nivelDePopularidad
 	var personalidad
@@ -107,14 +107,10 @@ class Sims {
 	}
 	
 	method trabajar() {
-		if (trabajoActual == null ){
-			self.ganarDinero(0)
-			self.modificarFelicidad(0)
-			}
-		else 
+		if (trabajoActual != null ){
 		trabajoActual.pasarUnDia(self)
 		self.verificar() 
-	}
+	}}
 	
 	method verificar (){
 		if(personalidad == buenazo && self.trabajaConTodosSusAmigos()){
@@ -199,16 +195,16 @@ class Trabajo {
 	}
 }
 class Copado inherits Trabajo {
-	constructor(_dinero,_nivelDeFelicidad)= super(_dinero,_nivelDeFelicidad)
+	constructor(dinero,nivelDeFelicidad)= super(dinero,nivelDeFelicidad)
 	method pasarUnDia(empleado) {
-		empleado.ganarDinero(_dinero)
-		empleado.modificarFelicidad(_nivelDeFelicidad)
+		empleado.ganarDinero(dinero)
+		empleado.modificarFelicidad(nivelDeFelicidad)
 	}
 	
 }
 
 class Mercenario inherits Trabajo {
-	constructor(_dinero,_nivelDeFelicidad)= super(_dinero,_nivelDeFelicidad)
+	constructor(dinero,nivelDeFelicidad)= super(dinero,nivelDeFelicidad)
 	method pasarUnDia(empleado) {
 		empleado.ganarDinero(100 + empleado.dinero()*0.02)
 	}
@@ -216,10 +212,10 @@ class Mercenario inherits Trabajo {
 }
 
 class Aburrido inherits Trabajo {
-	constructor(_dinero,_nivelDeFelicidad)= super(_dinero,_nivelDeFelicidad)
+	constructor(dinero,nivelDeFelicidad)= super(dinero,nivelDeFelicidad)
 	method pasarUnDia(empleado) {
-		empleado.ganarDinero(_dinero)
-		empleado.modificarFelicidad(- _nivelDeFelicidad)
+		empleado.ganarDinero(dinero)
+		empleado.modificarFelicidad(- nivelDeFelicidad)
 	}
 	
 }
