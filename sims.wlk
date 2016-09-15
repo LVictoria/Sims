@@ -80,8 +80,8 @@ class Sim {
 	
 	 
 	// Valoracion
-	method valorar (nuevoAmigo,_nivelDeFelicidad) {
-		 return self.personalidad().valorarSegun(nuevoAmigo,_nivelDeFelicidad)
+	method valorar(nuevoAmigo) {
+		 return self.personalidad().valorarSegun(nuevoAmigo,nivelDeFelicidad)
 	}
 	
 	method amigoMasValorado (){
