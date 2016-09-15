@@ -1,9 +1,42 @@
 
 import sims.*
-
+//R1
+test "maria recibe abrazo comun"
+{
+	const ernesto = new Sim("M",19,1000,100,buenazo,"F")
+	const maria = new Sim("F",19,100,100,buenazo,"M")
+	var felicidadMaria = maria.nivelDeFelcidad
+	ernesto.abrazoComun(maria)
+	assert.equals(felicidadMaria +4, maria.nivelDeFelicidad)
+}
+test "ernesto da un abrazo comun"
+{
+	const ernesto = new Sim("M",19,1000,100,buenazo,"F")
+	const maria = new Sim("F",19,100,100,buenazo,"M")
+	var felicidadErnesto = ernesto.nivelDeFelcidad
+	ernesto.abrazoComun(maria)
+	assert.equals(felicidadErnesto +2, ernesto.nivelDeFelicidad)
+}/* 
+test "maria recibe abrazo prolongado"
+{
+	const ernesto = new Sim("M",19,1000,100,buenazo,"F")
+	const maria = new Sim("F",19,100,100,buenazo,"M")
+	var felicidadMaria = maria.nivelDeFelcidad
+	ernesto.abrazoComun(maria)
+	assert.equals(felicidadMaria +4, maria.nivelDeFelicidad)
+}
+test "ernesto da un abrazo prolongado"
+{
+	const ernesto = new Sim("M",19,1000,100,buenazo,"F")
+	const maria = new Sim("F",19,100,100,buenazo,"M")
+	var felicidadErnesto = ernesto.nivelDeFelcidad
+	ernesto.abrazoComun(maria)
+	assert.equals(felicidadErnesto +2, ernesto.nivelDeFelicidad)
+}*/
+//R2
 test "Cuanto valora un Sim a otro " {
-	const ernesto = new Sim("hombre",19,1000,100,buenazo,"mujer")
-	const maria = new Sim("mujer",19,100,100,buenazo,"hombre")
+	const ernesto = new Sim("M",19,1000,100,buenazo,"F")
+	const maria = new Sim("F",19,100,100,buenazo,"M")
 	assert.equals(500,ernesto.valorar(maria))
 
 }

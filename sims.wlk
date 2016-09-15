@@ -109,8 +109,8 @@ class Sim {
 			_abrazado.estadoDeAnimo(sonador)
 			_abrazado.modificarFelicidad(1000)
 			//PIERDE EL CONOCIMIENTO
-	 }
-		}
+	 	}
+		
 		else
 		{
 			_abrazado.estadoDeAnimo(incomodo)
