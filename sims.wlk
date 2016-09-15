@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 
-class Sim {
-=======
 class Sims {
->>>>>>> branch 'master' of https://LVictoria@github.com/LVictoria/Sims
-	
 	var sexo 
 	var	edad
 	var nivelDeFelicidad = 100
@@ -13,14 +8,10 @@ class Sims {
 	var personalidad
 	var dinero = 0 
 	var trabajoActual
-<<<<<<< HEAD
 	var sexoPreferencia
-	
-	constructor (_sexo, _edad, _nivelDeFelicidad, _nivelDePopularidad, _personalidad,_sexoPreferencia)
-=======
-	var sexoPreferencia;
+
 	constructor (_sexo, _edad, _nivelDeFelicidad, _nivelDePopularidad, _personalidad, _sexoPreferencia)
->>>>>>> branch 'master' of https://LVictoria@github.com/LVictoria/Sims
+
 	 {
 	 	sexoPreferencia = _sexoPreferencia
 	 	sexo = _sexo
@@ -137,16 +128,10 @@ class Sims {
 	method trabajanJuntos(_sim){
 		return _sim.trabajo() == self.trabajo()
 	}
-	//Atracciones
-	method atraccion(_sim)
-	{
-		return sexoPreferencia == _sim.sexo && personalidad.atraccion(_sim,self)
-	}
 	
-	//Atracciones
+//Atracciones
 	
-	method atraccion(_sim)
-	{
+	method atraccion(_sim){
 		return sexoPreferencia == _sim.sexo() && personalidad.atraccion(_sim,self)
 	}
 	
@@ -159,31 +144,21 @@ object interesado {
 	method valorarSegun(amigo,nivelDeFelicidad) {
 		return amigo.dineroDeMisAmigos()
 	}
-<<<<<<< HEAD
-	
-	method atracciones(_simAtractivo, _sim){
-		return (_sim.dinero() *2) <= _simAtractivo.dinero()
-=======
-	method atracciones(_simAtractivo, _sim)
-	{
-		return (_sim.dinero *2) <= _simAtractivo.dinero
->>>>>>> branch 'master' of https://LVictoria@github.com/LVictoria/Sims
-	}
-}
 
+	method atracciones(_simAtractivo, _sim){
+		return (_sim.dinero() *2) 
+		}
+}
 
 object superficial {
 	
-	method  valorarSegun(amigo,nivelDeFelicidad){
+	method  valorarSegun(amigo,nivelDeFelicidad) {
 		return 20 * amigo.nivelDeFelicidad()
 	}
 	
-	method atracciones(_simAtractivo, _sim){
-		return _sim.amigoMasPopular().nivelDePopularidad() <= _simAtractivo.nivelDePopularidad()
-	}
-	method atracciones(_simAtractivo, _sim)
-	{
-		return _sim.amigoMasPopular().nivelDePopularidad() <= _simAtractivo.nivelDePopularidad()
+	
+	method atracciones(_simAtractivo, _sim) {
+		return _sim.amigoMasPopular().nivelDePopularidad()  <= _simAtractivo.nivelDePopularidad()
 	}
 }
 
@@ -192,29 +167,22 @@ object buenazo {
 	method valorarSegun (amigo,nivelDeFelicidad) {
 		return nivelDeFelicidad * 0.5
 	}
-<<<<<<< HEAD
+
 	method atracciones(){
-=======
-	method atracciones()
-	{
->>>>>>> branch 'master' of https://LVictoria@github.com/LVictoria/Sims
 		return true
 	}
 }
+
 
 object peleadoConLaVida {
 	
 	method valorarSegun(amigo,nivelDeFelicidad) {
 		return 0
 	}
-<<<<<<< HEAD
-	method atracciones(_simAtractivo, _sim) {
+	
+
+	method atracciones(_simAtractivo, _sim){
 		return _simAtractivo.nivelDeFelicidad() < 200
-=======
-	method atracciones(_simAtractivo, _sim)
-	{
-		return _simAtractivo.nivelDeFelicidad < 200
->>>>>>> branch 'master' of https://LVictoria@github.com/LVictoria/Sims
 	}
 }
 
