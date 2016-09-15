@@ -1,4 +1,8 @@
 
+
+ 
+
+
 class Sim {
 	var sexo 
 	var	edad
@@ -9,6 +13,7 @@ class Sim {
 	var dinero = 0 
 	var trabajoActual
 	var sexoPreferencia
+	var informaciones = {}
 
 	constructor (_sexo, _edad, _nivelDeFelicidad, _nivelDePopularidad, _personalidad, _sexoPreferencia)
 
@@ -89,7 +94,7 @@ class Sim {
 	}
 	
 	//Abrazos 
-	
+	method darAbrazo(){}
  	
  	//Dinero y Trabajo 
 	method ganarDinero(_dinero) {
@@ -130,7 +135,13 @@ class Sim {
 	method atraccion(_sim){
 		return sexoPreferencia == _sim.sexo() && personalidad.atraccion(_sim,self)
 	}
-	
+	//Informacion
+	method nuevaInformacion(_informacion)
+	{
+		informaciones.add(_informacion)
+	}
+	method informacion()
+	{return informaciones}
 }
 
 //Personalidades
@@ -221,9 +232,26 @@ class Aburrido inherits Trabajo {
 }
 
 
-
- 
-
-
-
+object abrazoComun
+{
+	method resultadoAbrazo(_abrazador, _abrazado)
+	{
+		_abrazador.modificarFelicidad(2)
+		_abrazado.modificarFelicidad(4)
+	}
+}
+object abrazoProlongado
+{
+	method resultadoAbrazo(_abrazador, _abrazado)
+	{
+		if(_abrazado.atraccion(_abrazador))
+		{
+			//_abrazado.estadoDeAnimo(sonador)
+		}
+		else
+		{
+			//_abrazado.estadoDeAnimo(incomodo)
+		}
+	}
+}
  
