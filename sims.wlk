@@ -15,6 +15,7 @@ class Sim {
 	var sexoPreferencia
 	var informaciones = {}
 	var estadoDeCelos
+	var pareja = null
 
 	constructor (_sexo, _edad, _nivelDeFelicidad, _nivelDePopularidad, _personalidad, _sexoPreferencia)
 
@@ -34,7 +35,12 @@ class Sim {
 	method sexoActual () {
 		return sexo 
 	}
-	
+	method amigos()
+	{return amigos}
+	method pareja()
+	{
+		return pareja
+	}
 	method nivelDeFelicidad () {
 		return nivelDeFelicidad
 	}
@@ -78,14 +84,21 @@ class Sim {
 		amigos = _amigos
 	}
 	method hacerseAmigo (nuevoAmigo) {
+		if(!self.esAmigo(nuevoAmigo))
+		{
 		amigos.add(nuevoAmigo)
-		nivelDeFelicidad += self.valorar(nuevoAmigo,self.nivelDeFelicidad())
+		nivelDeFelicidad += self.valorar(nuevoAmigo)
+		
+		}
 	}
 	
 	method esAmigo (amigo) {
 		amigos.contains(amigo)
 	}
-	
+	method agregarNuevoGrupoDeAmigos(_sim)
+	{
+		_sim.amigos().foreach{amigo=>self.hacerseAmigo(amigo)}
+	}
 	 
 	// Valoracion
 	method valorar(nuevoAmigo) {
@@ -93,7 +106,7 @@ class Sim {
 	}
 	
 	method amigoMasValorado (){
-		return amigos.max{amigo => self.valorar(amigo,self.nivelDeFelicidad())}
+		return amigos.max{amigo => self.valorar(amigo)}
 	}
 	
 	method abrazoComun(_abrazador, _abrazado)
@@ -116,6 +129,13 @@ class Sim {
 			_abrazado.estadoDeAnimo(incomodo)
 			_abrazado.modificarFelicidad(- 200)
 		}
+	}
+	//Relaciones
+	method nuevaPareja(_pareja)
+	{
+		pareja = _pareja
+		self.agregarNuevoGrupoDeAmigos(pareja)
+		
 	}
  	//Dinero y Trabajo 
 	method ganarDinero(_dinero) {
@@ -280,5 +300,24 @@ object celosPorPareja {
 	method efectoCelos(_Sim)
 	{
 		_Sim.nuevosAmigos(_Sim.filter{amigo => amigo.esAmigo( PAREJA )})
+	}
+}
+
+//Relaciones
+class Relacion
+{
+	var primerIntegrante
+	var segundoIntegrante
+	constructor(_simPropone, _simAcepta)
+	{
+		
+		primerIntegrante = _simPropone
+		segundoIntegrante = _simAcepta
+		_simPropone.nuevaPareja(_simAcepta)
+		_simAcepta.nuevaPareja(_simPropone)
+	}
+	method relacionFunciona()
+	{
+		return primerIntegrante.atraccion(segundoIntegrante) && segundoIntegrante.atraccion(primerIntegrante)
 	}
 }
