@@ -154,11 +154,11 @@ class Sim {
 	method pareja(_pareja){
 		pareja = _pareja
 	}
+
 	
 	method nuevaPareja(_pareja,_relacion){
 		pareja =_pareja
 		relacionActual = _relacion
-		
 	}
 	
 	method esSoltero(){
@@ -211,6 +211,10 @@ class Sim {
 		return _sim.amigos().any{amigo => self.atraccion(amigo)}
 	}
 	
+	method quienesAtraen(coleccion){
+		return coleccion.filter({sim => self.atraccion(sim)})
+	}
+	
 	//Informacion
 	method nuevaInformacion(_informacion){
 		informaciones.add(_informacion)
@@ -226,6 +230,10 @@ class Sim {
 	
 	method conocedor (){
 		return informaciones.map{informacion => informacion.size()}.sum()
+	}
+	
+	method tieneElConocimiento(infomacion){ 
+		return informaciones.contains(infomacion)
 	}
 	
 	
@@ -246,7 +254,7 @@ class Sim {
 object interesado {
 	
 	method valorarSegun(amigo,nivelDeFelicidad) {
-		return amigo.dineroDeMisAmigos()
+		return amigo.dineroDeMisAmigos() * 0.1
 	}
 
 	method atraccion(_simAtractivo, _sim){
@@ -487,5 +495,3 @@ class Relacion {
 	}
 	
 }
-
-
