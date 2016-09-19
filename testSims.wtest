@@ -1,60 +1,332 @@
 
 import sims.*
-//R1
-test "maria recibe abrazo comun"
-{
-	const ernesto = new Sim("M",19,1000,100,buenazo,"F")
-	const maria = new Sim("F",19,100,100,buenazo,"M")
-	var felicidadMaria = maria.nivelDeFelcidad
-	ernesto.abrazoComun(maria)
-	assert.equals(felicidadMaria +4, maria.nivelDeFelicidad)
+
+//Abrazos 
+test "Maria recibe abrazo comun"{
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	ernesto.darAbrazo(abrazoComun,maria)
+	assert.equals(104, maria.nivelDeFelicidad())
 }
-test "ernesto da un abrazo comun"
-{
-	const ernesto = new Sim("M",19,1000,100,buenazo,"F")
-	const maria = new Sim("F",19,100,100,buenazo,"M")
-	var felicidadErnesto = ernesto.nivelDeFelcidad
-	ernesto.abrazoComun(maria)
-	assert.equals(felicidadErnesto +2, ernesto.nivelDeFelicidad)
-}/* 
-test "maria recibe abrazo prolongado"
-{
-	const ernesto = new Sim("M",19,1000,100,buenazo,"F")
-	const maria = new Sim("F",19,100,100,buenazo,"M")
-	var felicidadMaria = maria.nivelDeFelcidad
-	ernesto.abrazoComun(maria)
-	assert.equals(felicidadMaria +4, maria.nivelDeFelicidad)
+
+test "Ernesto da un abrazo comun"{
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	ernesto.darAbrazo(abrazoComun,maria)
+	assert.equals(1002, ernesto.nivelDeFelicidad())
 }
-test "ernesto da un abrazo prolongado"
-{
-	const ernesto = new Sim("M",19,1000,100,buenazo,"F")
-	const maria = new Sim("F",19,100,100,buenazo,"M")
-	var felicidadErnesto = ernesto.nivelDeFelcidad
-	ernesto.abrazoComun(maria)
-	assert.equals(felicidadErnesto +2, ernesto.nivelDeFelicidad)
-}*/
-//R2
-test "Cuanto valora un Sim a otro " {
-	const ernesto = new Sim("M",19,1000,100,buenazo,"F")
-	const maria = new Sim("F",19,100,100,buenazo,"M")
+
+
+test "Ernesto da un abrazo prolongado, Maria se siente atraida"{
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	ernesto.darAbrazo(abrazoProlongado,maria)
+	assert.equals(soniador, maria.estadoDeAnimoActual())
+	
+}
+
+test "Ernesto da un abrazo prolongado, Maria no se siente atraida " {
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,interesado,"Hombre")
+	ernesto.darAbrazo(abrazoProlongado, maria)
+	assert.equals(incomodo, maria.estadoDeAnimoActual())
+}
+
+// Valoraciones
+test "Cuanto valora un Sim a otro, personalidad buenazo " {
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
 	assert.equals(500,ernesto.valorar(maria))
 
 }
-//Atraccion 
-//R20
-test "sim se siente atraido"
-{
-	const ernesto = new Sim("M",19,1000,100,buenazo,"F")
-	const maria = new Sim("F",19,100,100,buenazo,"M")
-	assert.(ernesto.atraccion(maria))
+
+test "Cuanto valora un Sim a otro,personalidad superficial " {
+	const ernesto = new Sim("Hombre",19,1000,100,superficial,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,superficial,"Hombre")
+	assert.equals(2000,ernesto.valorar(maria))
+
 }
-//R21
-test "sims que le atraen"
-{
-	const ernesto = new Sim("M",19,1000,100,buenazo,"F")
-	const maria = new Sim("F",19,100,100,buenazo,"M")
-	const nicolas = new Sim ("M", 21, 130, superficial, "F")
-	const sofia = new Sim("F", 22, 22, interesado, "F")
-	var atractivos = sofia.leAtraen([ernesto, maria, nicolas])
-	assert
+
+ 
+test "Saber quien es el amigo a quien más valora un Sim, personalidad buenazo"  {
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	const hector= new Sim("Hombre",23,100,100,peleadoConLaVida,"Mujer")
+	ernesto.hacerseAmigo(maria)
+	ernesto.hacerseAmigo(hector)
+	assert.equals(maria,ernesto.amigoMasValorado())
 }
+// Amistades y Popularidad
+
+test "Hacer que un Sim se haga amigo de otro"{
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	ernesto.hacerseAmigo(maria)
+	assert.equals([maria],ernesto.amigos())
+}
+
+// Lo dejamos así porque sino sería equivalente al test anterior "Hacer que un Sim se haga amigo de otro
+
+ test "Hacer que dos Sims se hagan amigos entre sí "{
+ 	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	ernesto.hacerseAmigo(maria)
+	maria.hacerseAmigo(ernesto)
+	assert.equals([ernesto],maria.amigos())
+	assert.equals([maria],ernesto.amigos())
+ }
+ 
+
+test "Saber si un Sim es amigo de otro"{
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	ernesto.hacerseAmigo(maria)
+	assert.that(ernesto.esAmigo(maria))
+	
+}
+
+test "Preguntarle a un Sim cuales son sus 4 amigos más nuevos" {
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	const hector= new Sim("Hombre",23,100,50,peleadoConLaVida,"Mujer")
+	const jose= new Sim("Hombre",30,100,50,superficial,"Mujer")
+	const julia = new Sim("Mujer",19,44,545,interesado,"Hombre")
+	const marcos = new Sim("Hombre",37,500,1000,buenazo,"Mujer")
+	ernesto.hacerseAmigo(maria)
+	ernesto.hacerseAmigo(julia)
+	ernesto.hacerseAmigo(jose)
+	ernesto.hacerseAmigo(hector)
+	ernesto.hacerseAmigo(marcos)
+	assert.equals([julia,jose,hector,marcos],ernesto.amigosMasRecientes(4))
+}
+
+test "Preguntarle a un Sim cuales son sus 4 amigos más antiguos" {
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	const hector= new Sim("Hombre",23,100,50,peleadoConLaVida,"Mujer")
+	const jose= new Sim("Hombre",30,100,50,superficial,"Mujer")
+	const julia = new Sim("Mujer",19,44,545,interesado,"Hombre")
+	const marcos = new Sim("Hombre",37,500,1000,buenazo,"Mujer")
+	ernesto.hacerseAmigo(maria)
+	ernesto.hacerseAmigo(julia)
+	ernesto.hacerseAmigo(jose)
+	ernesto.hacerseAmigo(hector)
+	ernesto.hacerseAmigo(marcos)
+	assert.equals([maria,julia,jose,hector],ernesto.amigosMasAntiguos(4))
+}
+
+
+test "Preguntarle a un Sim cual es su nivel de popularidad"{
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	assert.equals(100,ernesto.nivelDePopularidad())
+}
+
+test "Preguntarle a un Sim cual es su nivel de popularidad y tiene amigos"{
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	ernesto.hacerseAmigo(maria)
+	assert.equals(200,ernesto.nivelDePopularidad())
+}
+
+test "Preguntarle a un Sim si es el más popular de su círculo de amigos" {
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	const hector= new Sim("Hombre",23,100,50,peleadoConLaVida,"Mujer")
+	ernesto.hacerseAmigo(maria)
+	ernesto.hacerseAmigo(hector)
+	assert.that(ernesto.esPopular())
+} 
+//Relaciones
+
+test "Hacer que dos Sims inicien una relación. Ernesto es pareja de maria" {
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	 new Relacion(ernesto,maria)
+	assert.equals(ernesto,maria.pareja())
+	
+}
+
+test "Hacer que dos Sims inicien una relación. Maria es pareja de Ernesto" {
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	 new Relacion(ernesto,maria)
+	assert.equals(maria,ernesto.pareja())
+	
+}
+
+test "Saber si un Sim forma parte de una relación" {
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	const ernestoYMaria = new Relacion (maria,ernesto)
+	assert.that(ernestoYMaria.formaParte(maria))
+}
+
+test "Conocer el círculo de amigos de la relación" {
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	const ernestoYMaria = new Relacion(ernesto,maria)
+	const hector= new Sim("Hombre",23,100,50,peleadoConLaVida,"Mujer")
+	const jose= new Sim("Hombre",30,100,50,superficial,"Mujer")
+	const julia = new Sim("Mujer",19,44,545,interesado,"Hombre")
+	ernesto.hacerseAmigo(julia)
+	ernesto.hacerseAmigo(jose)
+	maria.hacerseAmigo(hector)
+	maria.hacerseAmigo(jose)
+	assert.equals(#{julia,jose,hector},ernestoYMaria.circuloDeAmigos())
+
+}
+
+test "Conocer los miembros de una relación " {
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	const ernestoYMaria = new Relacion(ernesto,maria)
+	assert.equals(#{ernesto,maria}, ernestoYMaria.miembros())
+}
+
+test "Saber si una relación funciona"{
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	const ernestoYMaria = new Relacion(ernesto,maria)
+	assert.that(ernestoYMaria.relacionFunciona())
+}
+
+test "Saber si se pudre todo " {
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Mujer")
+	const julia = new Sim("Mujer",19,44,368,buenazo,"Hombre")
+	const ernestoYMaria = new Relacion(ernesto,maria)
+	ernesto.hacerseAmigo(julia)
+	assert.that(ernestoYMaria.sePudreTodo())
+}
+
+test "No se deberia pudrir todo y no se pudre" {
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	const julia = new Sim("Mujer",19,44,368,buenazo,"Hombre")
+	const ernestoYMaria = new Relacion(ernesto,maria)
+	ernesto.hacerseAmigo(julia)
+	assert.notThat(ernestoYMaria.sePudreTodo())
+}
+
+test "Hacer que una relación termine, haciendo que sus miembros dejen de formar parte de ella." {
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	const ernestoYMaria = new Relacion(ernesto,maria)
+	ernestoYMaria.terminarRelacion()
+	assert.equals(#{},ernestoYMaria.miembros())
+	}
+	
+test "Saber si una relación terminó."{
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	const ernestoYMaria = new Relacion(ernesto,maria)
+	ernestoYMaria.terminarRelacion()
+	assert.that(ernestoYMaria.terminoLaRelacion())
+}
+
+test "Se reestablece la relacion de Hector y Maria" {
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	const hector= new Sim("Hombre",23,100,50,peleadoConLaVida,"Mujer")
+	const jose= new Sim("Hombre",30,100,50,superficial,"Mujer")
+	const julia = new Sim("Mujer",19,44,545,interesado,"Hombre")
+	const mariaYJose = new Relacion(maria, jose)
+	const hectorYJulia = new Relacion(hector, julia)
+	mariaYJose.terminarRelacion()
+	hectorYJulia.terminarRelacion()
+	const hectorYMaria = new Relacion(hector,maria)
+	assert.notThat(hectorYMaria.terminoLaRelacion())
+	}
+
+//Estado De Animo
+
+test "Hacer que un Sim tenga un estado de animo particular, verificar informacion" {
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	ernesto.nuevaInformacion("contenidos")
+	ernesto.estadoDeAnimo(soniador)
+	assert.equals(#{},ernesto.informacion())
+}
+
+test "Hacer que un Sim tenga un estado de animo particular, verificar nivelDeFelicidad" {
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	ernesto.estadoDeAnimo(soniador)
+	assert.equals(2000,ernesto.nivelDeFelicidad())}
+
+test "Hacer que a un Sim se le vaya su estado de ánimo actual (y vuelva a la normalidad)"{
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	ernesto.estadoDeAnimoNormal()
+	assert.equals('normal',ernesto.estadoDeAnimoActual())
+}
+
+//Informacion
+
+test "Contarle una información a un Sim"{
+	const ernesto = new Sim("Hombre",19,90,100,buenazo,"Mujer")
+	ernesto.nuevaInformacion('contenidos de pdep')
+	assert.equals(#{'contenidos de pdep'},ernesto.informacion())
+}
+
+test "Saber cuán conocedor es un Sim"{
+	const ernesto = new Sim("Hombre",19,90,100,buenazo,"Mujer")
+	ernesto.nuevaInformacion('contenidos de pdep')
+	assert.equals(18,ernesto.conocedor())
+}
+
+test "Hacer que un Sim tenga amnesia" {
+	const ernesto = new Sim("Hombre",19,90,100,buenazo,"Mujer")
+	ernesto.nuevaInformacion('contenidos de pdep')
+	ernesto.amnesia()
+	assert.equals(#{},ernesto.informacion())
+}
+// Celos
+
+test "Hacer que un Sim se ponga celoso,  como cambia el de nivelDeFelicidad" {
+	const ernesto = new Sim("Hombre",19,90,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,50,buenazo,"Hombre")
+	const hector= new Sim("Hombre",23,100,1000,peleadoConLaVida,"Mujer")
+	ernesto.hacerseAmigo(maria)
+	ernesto.hacerseAmigo(hector)
+	var nivelDeFelicidadAntes = ernesto.nivelDeFelicidad()
+	ernesto.ataqueDeCelos(celosPorPlata)
+	assert.equals(nivelDeFelicidadAntes - 10 ,ernesto.nivelDeFelicidad())
+}
+
+test "Hacer que un Sim se ponga celoso, como cambian los amigos " {
+	const ernesto = new Sim("Hombre",19,90,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,50,buenazo,"Hombre")
+	const hector= new Sim("Hombre",23,100,1000,peleadoConLaVida,"Mujer")
+	ernesto.hacerseAmigo(maria)
+	ernesto.hacerseAmigo(hector)
+	ernesto.ataqueDeCelos(celosPorPlata)
+	assert.equals([maria,hector],ernesto.amigos())
+}
+
+
+// Dinero
+
+test "Hacer que un Sim vaya a trabajar, verificar nivelDeFelicidad" {
+	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 
+	const coto = new Copado (300,5)
+	ernesto.nuevoEmpleo(coto)
+	ernesto.trabajar()
+	assert.equals(95,ernesto.nivelDeFelicidad())
+
+}
+
+test "Hacer que un Sim vaya a trabajar, verificar dinero" {
+	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 
+	const coto = new Copado (300,5)
+	ernesto.nuevoEmpleo(coto)
+	ernesto.trabajar()
+	assert.equals(300,ernesto.dinero())
+}
+
+
+
+test "Hacer que un Sim vaya a trabajar, sim desocupado" {
+	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 
+	ernesto.trabajar()
+	assert.equals(90,ernesto.nivelDeFelicidad())
+	assert.equals(0,ernesto.dinero())
+}
+
+

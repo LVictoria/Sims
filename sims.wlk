@@ -1,8 +1,3 @@
-
-
- 
-
-
 class Sim {
 	var sexo 
 	var	edad
@@ -13,9 +8,11 @@ class Sim {
 	var dinero = 0 
 	var trabajoActual
 	var sexoPreferencia
-	var informaciones = {}
+	var informaciones = #{}
+	var estadoDeAnimo = 'normal'
 	var estadoDeCelos
-	var pareja = null
+	var pareja = 'soltero'
+	var relacionActual 
 
 	constructor (_sexo, _edad, _nivelDeFelicidad, _nivelDePopularidad, _personalidad, _sexoPreferencia)
 
@@ -35,12 +32,7 @@ class Sim {
 	method sexoActual () {
 		return sexo 
 	}
-	method amigos()
-	{return amigos}
-	method pareja()
-	{
-		return pareja
-	}
+	
 	method nivelDeFelicidad () {
 		return nivelDeFelicidad
 	}
@@ -60,14 +52,47 @@ class Sim {
 	method sexo() {
 		return sexo
 	}
+	
+	method informacion(){
+		return informaciones
+	}
+	
+	method amigos(){
+		return amigos
+	}
+	
+	method pareja(){
+		return pareja
+	}
+	
+	method estadoDeAnimoActual(){
+		return estadoDeAnimo
+	}
+	
 	//Felicidad 
 	 method modificarFelicidad(cantidad){
-	 	nivelDeFelicidad += cantidad
+	 	nivelDeFelicidad = nivelDeFelicidad + cantidad
+	 }
+	 
+	 // Edad 
+	 
+	 method esJoven() {
+	 	return edad.between(18,29)
+	 }
+	 
+	 //Estado De Animo 
+	 method estadoDeAnimo(estado){
+	 	estadoDeAnimo =  estado
+	 	estadoDeAnimo.efecto(self)
+	 }
+	 
+	 method estadoDeAnimoNormal () {
+	 	estadoDeAnimo = 'normal'
 	 }
 	
 	// Popularidad
 	method nivelDePopularidad () {
-		nivelDePopularidad = amigos.sum{amigo => amigo.nivelDeFelicidad()}
+		nivelDePopularidad += amigos.sum{amigo => amigo.nivelDeFelicidad()}
 		return nivelDePopularidad
 	}
 	
@@ -75,29 +100,39 @@ class Sim {
 		return amigos.max{amigo => amigo.nivelDePopularidad()}
 	}
 	
+	
 	method esPopular() {
 		return self.nivelDePopularidad() > self.amigoMasPopular().nivelDePopularidad()
 	}
 	
 	// Amistades
-	method nuevosAmigos(_amigos){
-		amigos = _amigos
-	}
+	
 	method hacerseAmigo (nuevoAmigo) {
-		if(!self.esAmigo(nuevoAmigo))
-		{
 		amigos.add(nuevoAmigo)
 		nivelDeFelicidad += self.valorar(nuevoAmigo)
-		
-		}
+	}
+
+	method esAmigo (amigo) {
+		return amigos.contains(amigo)
 	}
 	
-	method esAmigo (amigo) {
-		amigos.contains(amigo)
+	method romperAmistad(_amigos) {
+		amigos.remove(_amigos)
 	}
-	method agregarNuevoGrupoDeAmigos(_sim)
-	{
-		_sim.amigos().foreach{amigo=>self.hacerseAmigo(amigo)}
+	
+
+	method amigosMasRecientes(nro){
+		if(amigos.size() < nro ){
+			error.throwWithMessage("No tienen tantos amigos")
+		}
+		return amigos.drop(amigos.size()- nro)
+	}
+	
+	method amigosMasAntiguos(nro) {
+		if(amigos.size() < nro ){
+			error.throwWithMessage("No tienen tantos amigos")
+		}
+		return amigos.take(nro)
 	}
 	 
 	// Valoracion
@@ -106,42 +141,35 @@ class Sim {
 	}
 	
 	method amigoMasValorado (){
-		return amigos.max{amigo => self.valorar(amigo)}
+		return amigos.max({amigo => self.valorar(amigo)})
 	}
 	
-	method abrazoComun(_abrazador, _abrazado)
-	{
-		_abrazador.modificarFelicidad(2)
-		_abrazado.modificarFelicidad(4)
+	//Abrazos 
+	method darAbrazo(tipo,sim){
+		tipo.resultadoAbrazo(self,sim)
 	}
-
-	method abrazoProlongado(_abrazador, _abrazado)
-	{
-		if(_abrazado.atraccion(_abrazador))
-		{
-			_abrazado.estadoDeAnimo(sonador)
-			_abrazado.modificarFelicidad(1000)
-			//PIERDE EL CONOCIMIENTO
-	 	}
-		
-		else
-		{
-			_abrazado.estadoDeAnimo(incomodo)
-			_abrazado.modificarFelicidad(- 200)
-		}
-	}
+	
+	
 	//Relaciones
-	method nuevaPareja(_pareja)
-	{
+	method pareja(_pareja){
 		pareja = _pareja
-		self.agregarNuevoGrupoDeAmigos(pareja)
+	}
+	
+	method nuevaPareja(_pareja,_relacion){
+		pareja =_pareja
+		relacionActual = _relacion
 		
 	}
+	
+	method esSoltero(){
+		return pareja == 'soltero'
+	}
+	
+
  	//Dinero y Trabajo 
 	method ganarDinero(_dinero) {
 		dinero += _dinero
 	}
-
 	
 	method dineroDeMisAmigos () {
 		return  amigos.sum{amigo => amigo.dinero()}
@@ -152,13 +180,15 @@ class Sim {
 		trabajoActual = trabajo
 	}
 	
+	
+	
 	method trabajar() {
 		if (trabajoActual != null ){
 		trabajoActual.pasarUnDia(self)
-		self.verificar() 
+		self.verificarSiTrabajaConSusAmigos() 
 	}}
 	
-	method verificar (){
+	method verificarSiTrabajaConSusAmigos (){
 		if(personalidad == buenazo && self.trabajaConTodosSusAmigos()){
 			nivelDeFelicidad = nivelDeFelicidad * 1.1
 	}}
@@ -171,26 +201,44 @@ class Sim {
 		return _sim.trabajo() == self.trabajo()
 	}
 	
-//Atracciones
+	//Atracciones
 	
 	method atraccion(_sim){
 		return sexoPreferencia == _sim.sexo() && personalidad.atraccion(_sim,self)
 	}
+
+	method atraccionPorAlgunAmigoDe(_sim) {
+		return _sim.amigos().any{amigo => self.atraccion(amigo)}
+	}
+	
 	//Informacion
-	method nuevaInformacion(_informacion)
-	{
+	method nuevaInformacion(_informacion){
 		informaciones.add(_informacion)
 	}
-	method informacion()
-	{
-		return informaciones
+	
+	method modificarInformacion(modificacion) {
+		informaciones = modificacion
 	}
+	
+	method amnesia() {
+		informaciones = #{}
+	}
+	
+	method conocedor (){
+		return informaciones.map{informacion => informacion.size()}.sum()
+	}
+	
+	
 	//Celos
+	
 	method ataqueDeCelos(tipoDeCelos){
-		self.modificarFelicidad(- 10)
-		tipoDeCelos.efectoCelos(self)
 		estadoDeCelos = tipoDeCelos
+		self.modificarFelicidad(-10)
+		tipoDeCelos.efectoCelos(self)
+		
 	}
+	
+
 }
 
 //Personalidades
@@ -201,8 +249,8 @@ object interesado {
 		return amigo.dineroDeMisAmigos()
 	}
 
-	method atracciones(_simAtractivo, _sim){
-		return (_sim.dinero() *2) 
+	method atraccion(_simAtractivo, _sim){
+		return (_simAtractivo.dinero() *2 > _sim.dinero() ) 
 		}
 }
 
@@ -213,9 +261,10 @@ object superficial {
 	}
 	
 	
-	method atracciones(_simAtractivo, _sim) {
-		return _sim.amigoMasPopular().nivelDePopularidad()  <= _simAtractivo.nivelDePopularidad()
+	method atraccion(_simAtractivo, _sim) {
+		return _sim.amigoMasPopular().nivelDePopularidad()  <= _simAtractivo.nivelDePopularidad() && _simAtractivo.esJoven()
 	}
+	
 }
 
 object buenazo {
@@ -224,7 +273,7 @@ object buenazo {
 		return nivelDeFelicidad * 0.5
 	}
 
-	method atracciones(){
+	method atraccion(_simAtractivo,_sim){
 		return true
 	}
 }
@@ -237,7 +286,7 @@ object peleadoConLaVida {
 	}
 	
 
-	method atracciones(_simAtractivo, _sim){
+	method atraccion(_simAtractivo, _sim){
 		return _simAtractivo.nivelDeFelicidad() < 200
 	}
 }
@@ -280,44 +329,163 @@ class Aburrido inherits Trabajo {
 	
 }
 
+
+//Tipo Abrazos
+
+object abrazoComun{
+	method resultadoAbrazo(_abrazador, _abrazado){
+		_abrazador.modificarFelicidad(2)
+		_abrazado.modificarFelicidad(4)
+	}
+}
+
+object abrazoProlongado {
+	method resultadoAbrazo(_abrazador, _abrazado)
+	{
+		if(_abrazado.atraccion(_abrazador)){
+			_abrazado.estadoDeAnimo(soniador)
+		}
+		else
+		{
+			_abrazado.estadoDeAnimo(incomodo)
+		}
+	}}
+	
+//Estados De Animo
+
+
+object soniador  {
+	method efecto(_sim){
+		_sim.modificarFelicidad(1000)
+		_sim.amnesia()
+		
+	}
+}
+
+object incomodo {
+	 method efecto(sim){
+	 	sim.modificarFelicidad(- 200)
+	 }
+}
+
 //Celos
 
+object celos {
+	
+
+	method efecto(amigosAEliminar,sim){
+		sim.romperAmistad(amigosAEliminar)
+	}
+	
+}
+
 object celosPorPlata {
-	method efectoCelos(_Sim)
-	{
-		_Sim.nuevosAmigos(_Sim.filter{amigo => amigo.dinero() < _Sim.dinero()})
+	
+	method amigosAEliminar(sim) {
+		return sim.amigos().filter{amigo => amigo.dinero() > sim.dinero()}
+	}
+
+	method efectoCelos(sim){
+		celos.efecto(self.amigosAEliminar(sim),sim)
 	}
 }
 
-object celosPorPopularidad {
-	method efectoCelos(_Sim)
-	{
-		_Sim.nuevosAmigos(_Sim.filter{amigo => amigo.nivelDePopularidad() < _Sim.nivelDePopularidad()})
+object celosPorPopularidad  {
+	method amigosAEliminar(sim) {
+		return sim.amigos().filter{amigo => amigo.nivelDePopularidad() > sim.nivelDePopularidad()}
+	}
+
+	method efectoCelos(sim){
+		celos.efecto(self.amigosAEliminar(sim),sim)
 	}
 }
 
-object celosPorPareja {
-	method efectoCelos(_Sim)
-	{
-		_Sim.nuevosAmigos(_Sim.filter{amigo => amigo.esAmigo( PAREJA )})
+object celosPorPareja{
+	method amigosAEliminar(sim) {
+		return sim.amigos().filter{amigo => sim.pareja().esAmigo(amigo)}
+	}
+
+	method efectoCelos(sim){
+		celos.efecto(self.amigosAEliminar(sim),sim)
 	}
 }
 
 //Relaciones
-class Relacion
-{
-	var primerIntegrante
-	var segundoIntegrante
-	constructor(_simPropone, _simAcepta)
-	{
+
+class Relacion { 	
+	var sim1
+	var sim2
+	var miembros = #{} 
+	var amigosCompartidos= #{}
+	var relacionActiva =  true
+	
+	
+	constructor(_sim1, _sim2) {
+		if(_sim1.esSoltero() && _sim2.esSoltero()){
+			sim1 = _sim1
+			sim2= _sim2
+			miembros.add(sim1)
+			miembros.add(sim2)
+			self.agregarCirculoDeAmigos()
+			sim1.nuevaPareja(sim2 , self)
+			sim2.nuevaPareja(sim1,self )}
+		else{
+		 error.throwWithMessage("No estan solteros")}
+		 }	
+	
+	
+	//Getters 
+	method miembros () {
+		return  miembros
+	}
+	
+
+	method circuloDeAmigos () {
+		return amigosCompartidos
+	}
+	
+	// 
+	
+	method terminoLaRelacion() {
+		return not  relacionActiva
+	}
+	method formaParte(sim) {
+		return self.miembros().contains(sim)
+	}
+	
+
+	method agregarCirculoDeAmigos() { 
+		sim1.amigos().forEach{amigo => amigosCompartidos.add(amigo)}
+		sim2.amigos().forEach{amigo => amigosCompartidos.add(amigo)}
 		
-		primerIntegrante = _simPropone
-		segundoIntegrante = _simAcepta
-		_simPropone.nuevaPareja(_simAcepta)
-		_simAcepta.nuevaPareja(_simPropone)
 	}
-	method relacionFunciona()
-	{
-		return primerIntegrante.atraccion(segundoIntegrante) && segundoIntegrante.atraccion(primerIntegrante)
+	
+	
+	method sePudreTodo () {
+		return not self.relacionFunciona() && self.algunoSienteAtraccionPorOtro()
 	}
+	
+	method algunoSienteAtraccionPorOtro () {
+		return sim1.atraccionPorAlgunAmigoDe(sim2) || sim2.atraccionPorAlgunAmigoDe(sim1)
+	}
+
+	method relacionFunciona() {
+		return self.seSientenAtraidos()
+	}	
+	
+	method seSientenAtraidos() {
+		return sim1.atraccion(sim2) && sim2.atraccion(sim1) 
+	}
+	
+	method terminarRelacion(){
+		miembros = #{}
+		amigosCompartidos = #{}
+		relacionActiva= false 
+		sim1.nuevaPareja('soltero',self)
+		sim2.nuevaPareja('soltero',self)
+		
+	}
+	
 }
+
+
