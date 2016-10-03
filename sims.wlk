@@ -472,6 +472,8 @@ class Relacion {
 	
 	
 	constructor(_sim1, _sim2) {
+		//FIXME ¿no les parece un poco complejo este código?
+		//¿No ven lógica repetida?
 		if(_sim1.esSoltero() && _sim2.esSoltero()){
 			sim1 = _sim1
 			sim2= _sim2

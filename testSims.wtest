@@ -1,5 +1,7 @@
 import sims.*
 
+//FIXME en lugar de poner un comentario sobre el "tema"
+//que van a testear, separen sus tests en mÃºltiples archivos
 
 //Abrazos 
 test "Maria recibe abrazo comun"{
@@ -197,14 +199,15 @@ test "Hacer que dos Sims inicien una relación. Maria es pareja de Ernesto" {
 	
 }
 
-test "Saber si un Sim forma parte de una relación" {
+test "Saber si un Sim forma parte de una relaciï¿½n" {
 	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
 	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
 	const ernestoYMaria = new Relacion (maria,ernesto)
 	assert.that(ernestoYMaria.formaParte(maria))
 }
 
-test "Conocer el círculo de amigos de la relación" {
+//FIXME este test falla
+test "Conocer el cï¿½rculo de amigos de la relaciï¿½n" {
 	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
 	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
 	const ernestoYMaria = new Relacion(ernesto,maria)
@@ -219,14 +222,14 @@ test "Conocer el círculo de amigos de la relación" {
 
 }
 
-test "Conocer los miembros de una relación " {
+test "Conocer los miembros de una relaciï¿½n " {
 	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
 	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
 	const ernestoYMaria = new Relacion(ernesto,maria)
 	assert.equals(#{ernesto,maria}, ernestoYMaria.miembros())
 }
 
-test "Saber si una relación funciona"{
+test "Saber si una relaciï¿½n funciona"{
 	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
 	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
 	const ernestoYMaria = new Relacion(ernesto,maria)
