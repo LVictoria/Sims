@@ -98,11 +98,17 @@ class Sim {
 	 	estadoDeAnimo.efecto(self)
 	 }
 	 
+	 //FIXME esto no es consistente con el método anterior: 
+	 //el estado de ánimo es un objeto que entiende `efecto(unSim)`, pero en este caso 
+	 //le están asignando un string!
 	 method estadoDeAnimoNormal () {
 	 	estadoDeAnimo = 'normal'
 	 }
 	
 	// Popularidad
+	//FIXME este método, por el nombre, parecería ser un getter. 
+	//Sin embargo, cada vez que se evalua, ¡produce un efecto!
+	//Dos envios sucesivos del mensaje `nivelDePopularidad()` deberían producir los mismos resultados
 	method nivelDePopularidad () {
 		nivelDePopularidad += amigos.sum{amigo => amigo.nivelDeFelicidad()}
 		return nivelDePopularidad
@@ -121,6 +127,9 @@ class Sim {
 	
 	method hacerseAmigo (nuevoAmigo) {
 		amigos.add(nuevoAmigo)
+		//TODO en lugar de modificar el nivel de felicidad cada vez que haen a un amigo, 
+		//quizás seria una mejor idea tener un getter que lo calcule en 
+		//base a las valoraciones de sus amigos. 
 		nivelDeFelicidad += self.valorar(nuevoAmigo)
 	}
 
@@ -134,6 +143,7 @@ class Sim {
 	
 
 	method amigosMasRecientes(nro){
+		//TODO procuren no utilizar abreviaturas en los parámetros de los métodos: sean expresivos
 		if(amigos.size() < nro ){
 			error.throwWithMessage("No tienen tantos amigos")
 		}
@@ -141,6 +151,8 @@ class Sim {
 	}
 	
 	method amigosMasAntiguos(nro) {
+		//FIXME ¿no ven lógica repetida entre este método y el anterior?
+		//¡Elimínenla!
 		if(amigos.size() < nro ){
 			error.throwWithMessage("No tienen tantos amigos")
 		}
@@ -195,12 +207,19 @@ class Sim {
 	
 	
 	method trabajar() {
+		//FIXME es una mala idea modelar utilizando null's, porque no pueden asignarle comportamiento
+		//Piensen cómo modelar la ausencia de trabajo SIN utilizar nulls
 		if (trabajoActual != null ){
 		trabajoActual.pasarUnDia(self)
 		self.verificarSiTrabajaConSusAmigos() 
+		//FIXME acuérdense de formatear el código apropiadamente
 	}}
 	
 	method verificarSiTrabajaConSusAmigos (){
+		//FIXME pueden resolver esto sin utilizar un if y el operador ==?
+		//La clave de objetos es delegar polimórficamente resposnabilidades de un objeto hacia otro, 
+		//pero cuando preguntan por el tipo o identidad de un objeto, y hacen cosas diferentes en función
+		//de ellos, están evitando la delegación de responsabilidades
 		if(personalidad == buenazo && self.trabajaConTodosSusAmigos()){
 			nivelDeFelicidad = nivelDeFelicidad * 1.1
 	}}
@@ -232,10 +251,15 @@ class Sim {
 		informaciones.add(_informacion)
 	}
 	
+	//FIXME noten que acá están utilizando de forma inconsistente el término `informacion`: 
+	//En el método anterior representa a un conocimiento individual, mientras que en el segundo representa
+	//a un conjunto de conocimientos
 	method modificarInformacion(modificacion) {
 		informaciones = modificacion
 	}
 	
+	//TODO más que `amnesia()` lo llamaría `tenerAmnesia`: recuerden que los métodos
+	//que representan acciones (con efecto) suelen contener verbos en el nombre
 	method amnesia() {
 		informaciones = #{}
 	}
@@ -314,6 +338,9 @@ object peleadoConLaVida {
 
 // Trabajo y tipos 
 
+//FIXME ¡esta clase no tienen ningún comportamiento!
+//Si no pueden asignarle responsabilidades a la clase, entonces lo mas probable
+//es que esa clase no tenga razón de ser
 class Trabajo {
 	var dinero 
 	var nivelDeFelicidad
@@ -343,6 +370,9 @@ class Mercenario inherits Trabajo {
 class Aburrido inherits Trabajo {
 	constructor(dinero,nivelDeFelicidad)= super(dinero,nivelDeFelicidad)
 	method pasarUnDia(empleado) {
+		//FIXME noten que todos los trabajos, dentro de `pasarUnDia(unEmpleado)` terminan
+		//enviandole al empleando `ganarDinero(unDinero)`. 
+		//Eso es lógica repetida: ¿no podrían evitarla de alguna forma?
 		empleado.ganarDinero(dinero)
 		empleado.modificarFelicidad(- nivelDeFelicidad)
 	}
@@ -376,6 +406,7 @@ object abrazoProlongado {
 
 object soniador  {
 	method efecto(_sim){
+		//FIXME ¡ojo que cuando sale del estado soñador, la amnesia se va!
 		_sim.modificarFelicidad(1000)
 		_sim.amnesia()
 		
