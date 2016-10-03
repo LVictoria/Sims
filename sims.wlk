@@ -1,5 +1,5 @@
-//FIXME deberían separar su proyecto en varios archivos. Por ejemplo, uno
-// que contenga la declaración del Sim, otro que contenga los abrazos, etc. 
+//FIXME deberÃ­an separar su proyecto en varios archivos. Por ejemplo, uno
+// que contenga la declaraciÃ³n del Sim, otro que contenga los abrazos, etc. 
 
 class Sim {
 	var sexo 
@@ -16,30 +16,29 @@ class Sim {
 	var estadoDeCelos
 	//FIXME modelar al estado de la pareja como un string es muy limitante, 
 	//porque no pueden asignarle comportamiento. Sugerencia: representar al estado de la pareja
-	//con objetos polimórficos
+	//con objetos polimÃ³rficos
 	var pareja = 'soltero'
 	var relacionActual 
 
-	//FIXME prefieran la convención unAlgo en lugar de _algo: menos chirimbolos, más felicidad :D
-	constructor (_sexo, _edad, _nivelDeFelicidad, _nivelDePopularidad, _personalidad, _sexoPreferencia)
+	//FIXME prefieran la convenciÃ³n unAlgo en lugar de _algo: menos chirimbolos, mÃ¡s felicidad :D
+	constructor (unSexo, unEdad, unNivelDeFelicidad, unNivelDePopularidad, unaPersonalidad, unSexoPreferencia)
 
 	 {
-	 	sexoPreferencia = _sexoPreferencia
-	 	sexo = _sexo
-	 	edad = _edad
-		nivelDeFelicidad = _nivelDeFelicidad
-		nivelDePopularidad = _nivelDePopularidad
-		personalidad = _personalidad
-		//FIXME seteen el sexo de preferencia una sola vez
-		sexoPreferencia = _sexoPreferencia
+	 	sexoPreferencia = unSexoPreferencia
+	 	sexo = unSexo
+	 	edad = unEdad
+		nivelDeFelicidad = unNivelDeFelicidad
+		nivelDePopularidad = unNivelDePopularidad
+		personalidad = unaPersonalidad
+		//FIXME seteen el sexo de preferencia una sola ve
 	 }
 	
 	
 	
 	// Getters 
-	//FIXME agregar el sufijo Actual no aporta nada de información: siempre que se le envia un mensaje
-	//a un objeto y éste responde, está respondiendo en base a su conocimiento actual
-	method sexoActual () {
+	//FIXME agregar el sufijo Actual no aporta nada de informaciÃ³n: siempre que se le envia un mensaje
+	//a un objeto y Ã©ste responde, estÃ¡ respondiendo en base a su conocimiento actual
+	method sexo () {
 		return sexo 
 	}
 	
@@ -80,9 +79,9 @@ class Sim {
 	}
 	
 	//Felicidad 
-	//FIXME este método no permite realizar modificaciones arbitrarias a la felicidad, sino tan sólo
-	//aumentarla. Entonces lo llamaría aumentarFelicidad	
-	 method modificarFelicidad(cantidad){
+	//FIXME este mÃ©todo no permite realizar modificaciones arbitrarias a la felicidad, sino tan sÃ³lo
+	//aumentarla. Entonces lo llamarÃ­a aumentarFelicidad	
+	 method aumentarFelicidad(cantidad){
 	 	nivelDeFelicidad = nivelDeFelicidad + cantidad
 	 }
 	 
@@ -98,19 +97,19 @@ class Sim {
 	 	estadoDeAnimo.efecto(self)
 	 }
 	 
-	 //FIXME esto no es consistente con el método anterior: 
-	 //el estado de ánimo es un objeto que entiende `efecto(unSim)`, pero en este caso 
-	 //le están asignando un string!
+	 //FIXME esto no es consistente con el mÃ©todo anterior: 
+	 //el estado de Ã¡nimo es un objeto que entiende `efecto(unSim)`, pero en este caso 
+	 //le estÃ¡n asignando un string!
 	 method estadoDeAnimoNormal () {
 	 	estadoDeAnimo = 'normal'
 	 }
 	
 	// Popularidad
-	//FIXME este método, por el nombre, parecería ser un getter. 
-	//Sin embargo, cada vez que se evalua, ¡produce un efecto!
-	//Dos envios sucesivos del mensaje `nivelDePopularidad()` deberían producir los mismos resultados
+	//FIXME este mÃ©todo, por el nombre, parecerÃ­a ser un getter. 
+	//Sin embargo, cada vez que se evalua, Â¡produce un efecto!
+	//Dos envios sucesivos del mensaje `nivelDePopularidad()` deberÃ­an producir los mismos resultados
 	method nivelDePopularidad () {
-		nivelDePopularidad += amigos.sum{amigo => amigo.nivelDeFelicidad()}
+		nivelDePopularidad = amigos.sum{amigo => amigo.nivelDeFelicidad()} //no se si algo mas afecta a la popularidad TODO
 		return nivelDePopularidad
 	}
 	
@@ -128,7 +127,7 @@ class Sim {
 	method hacerseAmigo (nuevoAmigo) {
 		amigos.add(nuevoAmigo)
 		//TODO en lugar de modificar el nivel de felicidad cada vez que haen a un amigo, 
-		//quizás seria una mejor idea tener un getter que lo calcule en 
+		//quizÃ¡s seria una mejor idea tener un getter que lo calcule en 
 		//base a las valoraciones de sus amigos. 
 		nivelDeFelicidad += self.valorar(nuevoAmigo)
 	}
@@ -143,19 +142,20 @@ class Sim {
 	
 
 	method amigosMasRecientes(nro){
-		//TODO procuren no utilizar abreviaturas en los parámetros de los métodos: sean expresivos
-		if(amigos.size() < nro ){
-			error.throwWithMessage("No tienen tantos amigos")
-		}
+		//TODO procuren no utilizar abreviaturas en los parÃ¡metros de los mÃ©todos: sean expresivos
+		self.tieneSuficientesAmigos(nro);
 		return amigos.drop(amigos.size()- nro)
 	}
-	
-	method amigosMasAntiguos(nro) {
-		//FIXME ¿no ven lógica repetida entre este método y el anterior?
-		//¡Elimínenla!
+	method tieneSuficientesAmigos(nro)
+	{
 		if(amigos.size() < nro ){
 			error.throwWithMessage("No tienen tantos amigos")
 		}
+	}
+	method amigosMasAntiguos(nro) {
+		//FIXME Â¿no ven lÃ³gica repetida entre este mÃ©todo y el anterior?
+		//Â¡ElimÃ­nenla!
+		self.tieneSuficientesAmigos(nro);
 		return amigos.take(nro)
 	}
 	 
@@ -208,21 +208,25 @@ class Sim {
 	
 	method trabajar() {
 		//FIXME es una mala idea modelar utilizando null's, porque no pueden asignarle comportamiento
-		//Piensen cómo modelar la ausencia de trabajo SIN utilizar nulls
+		//Piensen cÃ³mo modelar la ausencia de trabajo SIN utilizar nulls
 		if (trabajoActual != null ){
-		trabajoActual.pasarUnDia(self)
-		self.verificarSiTrabajaConSusAmigos() 
-		//FIXME acuérdense de formatear el código apropiadamente
-	}}
+			self.ganarDinero(trabajoActual.sueldo(self))
+			trabajoActual.cambiarFelicidad(self)
+			self.personalidad().trabajaConSusAmigos()
+		//FIXME acuÃ©rdense de formatear el cÃ³digo apropiadamente
+		}
+	}
 	
-	method verificarSiTrabajaConSusAmigos (){
+	/*method verificarSiTrabajaConSusAmigos (){
 		//FIXME pueden resolver esto sin utilizar un if y el operador ==?
-		//La clave de objetos es delegar polimórficamente resposnabilidades de un objeto hacia otro, 
-		//pero cuando preguntan por el tipo o identidad de un objeto, y hacen cosas diferentes en función
-		//de ellos, están evitando la delegación de responsabilidades
-		if(personalidad == buenazo && self.trabajaConTodosSusAmigos()){
-			nivelDeFelicidad = nivelDeFelicidad * 1.1
-	}}
+		//La clave de objetos es delegar polimÃ³rficamente resposnabilidades de un objeto hacia otro, 
+		//pero cuando preguntan por el tipo o identidad de un objeto, y hacen cosas diferentes en funciÃ³n
+		//de ellos, estÃ¡n evitando la delegaciÃ³n de responsabilidades
+		/*if(personalidad == buenazo && self.trabajaConTodosSusAmigos()){
+			nivelDeFelicidad = nivelDeFelicidad * 1.1}*/
+		//self.personalidad().trabajaConSusAmigos()
+	
+	//}
 	
 	method trabajaConTodosSusAmigos() {
 		return amigos.all{amigo => self.trabajanJuntos(amigo)}
@@ -251,14 +255,14 @@ class Sim {
 		informaciones.add(_informacion)
 	}
 	
-	//FIXME noten que acá están utilizando de forma inconsistente el término `informacion`: 
-	//En el método anterior representa a un conocimiento individual, mientras que en el segundo representa
+	//FIXME noten que acÃ¡ estÃ¡n utilizando de forma inconsistente el tÃ©rmino `informacion`: 
+	//En el mÃ©todo anterior representa a un conocimiento individual, mientras que en el segundo representa
 	//a un conjunto de conocimientos
 	method modificarInformacion(modificacion) {
 		informaciones = modificacion
 	}
 	
-	//TODO más que `amnesia()` lo llamaría `tenerAmnesia`: recuerden que los métodos
+	//TODO mÃ¡s que `amnesia()` lo llamarÃ­a `tenerAmnesia`: recuerden que los mÃ©todos
 	//que representan acciones (con efecto) suelen contener verbos en el nombre
 	method amnesia() {
 		informaciones = #{}
@@ -316,6 +320,11 @@ object buenazo {
 	method valorarSegun (amigo,nivelDeFelicidad) {
 		return nivelDeFelicidad * 0.5
 	}
+	method trabajaConSusAmigos(unSim)
+	{
+		if(unSim.trabajaConTodosSusAmigos())
+		unSim.nivelDeFelicidad = unSim.nivelDeFelicidad * 1.1
+	}
 
 	method atraccion(_simAtractivo,_sim){
 		return true
@@ -338,42 +347,39 @@ object peleadoConLaVida {
 
 // Trabajo y tipos 
 
-//FIXME ¡esta clase no tienen ningún comportamiento!
+//FIXME Â¡esta clase no tienen ningÃºn comportamiento!
 //Si no pueden asignarle responsabilidades a la clase, entonces lo mas probable
-//es que esa clase no tenga razón de ser
+//es que esa clase no tenga razÃ³n de ser
 class Trabajo {
 	var dinero 
 	var nivelDeFelicidad
 	constructor (_dinero,_nivelDeFelicidad){
 		dinero = _dinero
 		nivelDeFelicidad = _nivelDeFelicidad
-		
+	}
+	method sueldo(empleado)
+	{
+		return dinero;
 	}
 }
 class Copado inherits Trabajo {
 	constructor(dinero,nivelDeFelicidad)= super(dinero,nivelDeFelicidad)
-	method pasarUnDia(empleado) {
-		empleado.ganarDinero(dinero)
+	method cambiarFelicidad(empleado) {
 		empleado.modificarFelicidad(nivelDeFelicidad)
 	}
-	
 }
 
 class Mercenario inherits Trabajo {
 	constructor(dinero,nivelDeFelicidad)= super(dinero,nivelDeFelicidad)
-	method pasarUnDia(empleado) {
-		empleado.ganarDinero(100 + empleado.dinero()*0.02)
+	override method sueldo(empleado) {
+		return 100 + empleado.dinero()*0.02)
 	}
 	
 }
 
 class Aburrido inherits Trabajo {
 	constructor(dinero,nivelDeFelicidad)= super(dinero,nivelDeFelicidad)
-	method pasarUnDia(empleado) {
-		//FIXME noten que todos los trabajos, dentro de `pasarUnDia(unEmpleado)` terminan
-		//enviandole al empleando `ganarDinero(unDinero)`. 
-		//Eso es lógica repetida: ¿no podrían evitarla de alguna forma?
-		empleado.ganarDinero(dinero)
+	method cambiarFelicidad(empleado) {
 		empleado.modificarFelicidad(- nivelDeFelicidad)
 	}
 	
@@ -406,7 +412,7 @@ object abrazoProlongado {
 
 object soniador  {
 	method efecto(_sim){
-		//FIXME ¡ojo que cuando sale del estado soñador, la amnesia se va!
+		//FIXME Â¡ojo que cuando sale del estado soÃ±ador, la amnesia se va!
 		_sim.modificarFelicidad(1000)
 		_sim.amnesia()
 		
@@ -472,8 +478,8 @@ class Relacion {
 	
 	
 	constructor(_sim1, _sim2) {
-		//FIXME ¿no les parece un poco complejo este código?
-		//¿No ven lógica repetida?
+		//FIXME Â¿no les parece un poco complejo este cÃ³digo?
+		//Â¿No ven lÃ³gica repetida?
 		if(_sim1.esSoltero() && _sim2.esSoltero()){
 			sim1 = _sim1
 			sim2= _sim2
