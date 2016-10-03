@@ -1,3 +1,6 @@
+//FIXME deberían separar su proyecto en varios archivos. Por ejemplo, uno
+// que contenga la declaración del Sim, otro que contenga los abrazos, etc. 
+
 class Sim {
 	var sexo 
 	var	edad
@@ -11,9 +14,13 @@ class Sim {
 	var informaciones = #{}
 	var estadoDeAnimo = 'normal'
 	var estadoDeCelos
+	//FIXME modelar al estado de la pareja como un string es muy limitante, 
+	//porque no pueden asignarle comportamiento. Sugerencia: representar al estado de la pareja
+	//con objetos polimórficos
 	var pareja = 'soltero'
 	var relacionActual 
 
+	//FIXME prefieran la convención unAlgo en lugar de _algo: menos chirimbolos, más felicidad :D
 	constructor (_sexo, _edad, _nivelDeFelicidad, _nivelDePopularidad, _personalidad, _sexoPreferencia)
 
 	 {
@@ -23,12 +30,15 @@ class Sim {
 		nivelDeFelicidad = _nivelDeFelicidad
 		nivelDePopularidad = _nivelDePopularidad
 		personalidad = _personalidad
+		//FIXME seteen el sexo de preferencia una sola vez
 		sexoPreferencia = _sexoPreferencia
 	 }
 	
 	
 	
 	// Getters 
+	//FIXME agregar el sufijo Actual no aporta nada de información: siempre que se le envia un mensaje
+	//a un objeto y éste responde, está respondiendo en base a su conocimiento actual
 	method sexoActual () {
 		return sexo 
 	}
@@ -70,6 +80,8 @@ class Sim {
 	}
 	
 	//Felicidad 
+	//FIXME este método no permite realizar modificaciones arbitrarias a la felicidad, sino tan sólo
+	//aumentarla. Entonces lo llamaría aumentarFelicidad	
 	 method modificarFelicidad(cantidad){
 	 	nivelDeFelicidad = nivelDeFelicidad + cantidad
 	 }
