@@ -1,0 +1,32 @@
+ import sims.*
+ import personalidades.*
+ import trabajos.*
+ import relaciones.*
+ import celos.*
+ import estadosDeAnimo.*
+ import abrazos.*
+
+test "Contarle una información a un Sim"{
+	const ernesto = new Sim("Hombre",19,90,100,buenazo,"Mujer")
+	ernesto.nuevaInformacion('contenidos de pdep')
+	assert.equals(#{'contenidos de pdep'},ernesto.informacion())
+}
+
+test "Saber cuán conocedor es un Sim"{
+	const ernesto = new Sim("Hombre",19,90,100,buenazo,"Mujer")
+	ernesto.nuevaInformacion('contenidos de pdep')
+	assert.equals(18,ernesto.conocedor())
+}
+
+test "Hacer que un Sim tenga amnesia" {
+	const ernesto = new Sim("Hombre",19,90,100,buenazo,"Mujer")
+	ernesto.nuevaInformacion('contenidos de pdep')
+	ernesto.tenerAmnesia()
+	assert.equals(#{},ernesto.informacion())
+}
+
+test "Saber si un Sim tiene un conocimiento dado"{
+	const ernesto = new Sim("Hombre",19,90,100,buenazo,"Mujer")
+	ernesto.nuevaInformacion('contenidos de pdep')
+	assert.that(ernesto.tieneElConocimiento('contenidos de pdep'))
+}

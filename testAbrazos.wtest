@@ -1,0 +1,37 @@
+ import sims.*
+ import personalidades.*
+ import trabajos.*
+ import relaciones.*
+ import celos.*
+ import estadosDeAnimo.*
+ import abrazos.*
+ 
+test "Maria recibe abrazo comun"{
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	ernesto.darAbrazo(abrazoComun,maria)
+	assert.equals(104, maria.nivelDeFelicidad())
+}
+
+test "Ernesto da un abrazo comun"{
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	ernesto.darAbrazo(abrazoComun,maria)
+	assert.equals(1002, ernesto.nivelDeFelicidad())
+}
+
+
+test "Ernesto da un abrazo prolongado, Maria se siente atraida"{
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	ernesto.darAbrazo(abrazoProlongado,maria)
+	assert.equals(soniador, maria.estadoDeAnimo())
+	
+}
+
+test "Ernesto da un abrazo prolongado, Maria no se siente atraida " {
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,100,interesado,"Hombre")
+	ernesto.darAbrazo(abrazoProlongado, maria)
+	assert.equals(incomodo, maria.estadoDeAnimo())
+}

@@ -1,28 +1,10 @@
-import sims.*
-
-test "Hacer que un Sim se ponga celoso,  como cambia el de nivelDeFelicidad" {
-	const ernesto = new Sim("Hombre",19,90,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,50,buenazo,"Hombre")
-	const hector= new Sim("Hombre",23,100,1000,peleadoConLaVida,"Mujer")
-	ernesto.hacerseAmigo(maria)
-	ernesto.hacerseAmigo(hector)
-	var nivelDeFelicidadAntes = ernesto.nivelDeFelicidad()
-	ernesto.ataqueDeCelos(celosPorPlata)
-	assert.equals(nivelDeFelicidadAntes - 10 ,ernesto.nivelDeFelicidad())
-}
-
-test "Hacer que un Sim se ponga celoso, como cambian los amigos " {
-	const ernesto = new Sim("Hombre",19,90,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,50,buenazo,"Hombre")
-	const hector= new Sim("Hombre",23,100,1000,peleadoConLaVida,"Mujer")
-	ernesto.hacerseAmigo(maria)
-	ernesto.hacerseAmigo(hector)
-	ernesto.ataqueDeCelos(celosPorPlata)
-	assert.equals([maria,hector],ernesto.amigos())
-}
-
-
-// Dinero
+ import sims.*
+ import personalidades.*
+ import trabajos.*
+ import relaciones.*
+ import celos.*
+ import estadosDeAnimo.*
+ import abrazos.*
 
 test "Hacer que un Sim vaya a trabajar a un empleo copado , verificar nivelDeFelicidad" {
 	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 

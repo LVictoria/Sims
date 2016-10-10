@@ -1,0 +1,27 @@
+ import sims.*
+ import personalidades.*
+ import trabajos.*
+ import relaciones.*
+ import celos.*
+ import estadosDeAnimo.*
+ import abrazos.*
+
+
+test "Hacer que un Sim tenga un estado de animo particular, verificar informacion" {
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	ernesto.nuevaInformacion("contenidos")
+	ernesto.estadoDeAnimo(soniador)
+	assert.equals(#{},ernesto.informacion())
+}
+
+test "Hacer que un Sim tenga un estado de animo particular, verificar nivelDeFelicidad" {
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	ernesto.estadoDeAnimo(soniador)
+	assert.equals(2000,ernesto.nivelDeFelicidad())}
+
+test "Hacer que a un Sim se le vaya su estado de ánimo actual (y vuelva a la normalidad)"{
+	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
+	ernesto.estadoDeAnimo(normal)
+	assert.equals(normal,ernesto.estadoDeAnimo())
+}
+

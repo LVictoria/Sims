@@ -1,0 +1,42 @@
+ import sims.*
+ import personalidades.*
+ import trabajos.*
+ import relaciones.*
+ import celos.*
+ import estadosDeAnimo.*
+ import abrazos.*
+
+test "Saber si un Sim se siente atraído por otro, siendo interesado" {
+	const ernesto = new Sim("Hombre",19,90,100,interesado,"Mujer")
+	const maria = new Sim("Mujer",19,100,50,interesado,"Hombre")
+	maria.ganarDinero(500)
+	ernesto.ganarDinero(200)
+	assert.that(ernesto.atraccion(maria))
+}
+
+test "Saber si un Sim se siente atraído por otro, siendo superficial" {
+	const ernesto = new Sim("Hombre",19,90,100,superficial,"Mujer")
+	const pablo = new Sim("Hombre",19,90,200,superficial,"Mujer")
+	const maria = new Sim("Mujer",19,100,1000,superficial,"Hombre")
+	ernesto.hacerseAmigo(pablo)
+	assert.that(ernesto.atraccion(maria))
+}
+
+
+test "Saber si un Sim se siente atraído por otro, siendo buenazo" {
+	const ernesto = new Sim("Hombre",19,90,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,50,buenazo,"Hombre")
+	assert.that(ernesto.atraccion(maria))
+}
+
+test  "Sims de una colección por los que se siente atraído otro Sim" {
+	const ernesto = new Sim("Hombre",19,90,100,buenazo,"Mujer")
+	const pablo = new Sim("Hombre",19,90,100,buenazo,"Mujer")
+	const juan = new Sim("Mujer",19,100,50,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,50,interesado,"Hombre")
+	maria.ganarDinero(200)
+	ernesto.ganarDinero(500)
+	pablo.ganarDinero(600)
+	juan.ganarDinero(100)
+	assert.equals(#{ernesto,pablo},maria.quienesAtraen(#{ernesto, pablo, juan}))
+}
