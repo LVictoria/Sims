@@ -42,10 +42,10 @@ test "Hacer que un Sim vaya a trabajar a un empleo aburrido  ,verificar dinero" 
 
 test "Hacer que un Sim vaya a trabajar a un empleo mercenario , verificar nivelDeFelicidad" {
 	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 
-	const coto = new Aburrido (300,5)
+	const coto = new Mercenario (300,5)
 	ernesto.nuevoEmpleo(coto)
 	ernesto.trabajar()
-	assert.equals(85,ernesto.nivelDeFelicidad())
+	assert.equals(95,ernesto.nivelDeFelicidad())
 
 }
 

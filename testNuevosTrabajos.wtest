@@ -1,0 +1,71 @@
+ import sims.*
+ import personalidades.*
+ import trabajos.*
+ import relaciones.*
+ import celos.*
+ import estadosDeAnimo.*
+ import abrazos.*
+import nuevosTrabajos.*
+
+ test "Desarrollar nuevos trabajos. Aburridos hasta la muerte, verificar sueldo " {
+ 	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 
+	const coto = new AburridoHastaLaMuerte (300,5,2)
+	ernesto.nuevoEmpleo(coto)
+	ernesto.trabajar()
+	assert.equals(300,ernesto.dinero())
+ }
+ 
+ test "Desarrollar nuevos trabajos. Aburridos hasta la muerte, verificar nivelDeFelicidad" {
+	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 
+	const coto = new AburridoHastaLaMuerte (300,5,2)
+	ernesto.nuevoEmpleo(coto)
+	ernesto.trabajar()
+	assert.equals(80,ernesto.nivelDeFelicidad())
+
+}
+
+test "Desarrollar nuevos trabajos. Mercenario social , verificar nivelDeFelicidad" {
+	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 
+	const coto = new MercenarioSocial (0,5)
+	ernesto.nuevoEmpleo(coto)
+	ernesto.trabajar()
+	assert.equals(95,ernesto.nivelDeFelicidad())
+
+}
+
+
+test "Hacer que un Sim vaya a trabajar a un empleo mercenario  ,verificar dinero" {
+	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 
+	const maria = new Sim("Mujer",23,40,200,superficial,"Mujer")
+	const coto = new MercenarioSocial (0,5)
+	ernesto.nuevoEmpleo(coto)
+	ernesto.ganarDinero(4000)
+	ernesto.hacerseAmigo(maria)
+	ernesto.trabajar()
+	assert.equals(4180+1,ernesto.dinero())
+}
+
+test "Hacer que un Sim cambie su estado de animo  de soniador a normal  cuando va a trabajar. " {
+	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 
+	const coto = new MercenarioSocial (0,5)
+	ernesto.modificarEstadoDeAnimo(soniador)
+	ernesto.nuevoEmpleo(coto)
+	ernesto.trabajar()
+	assert.equals(normal,ernesto.estadoDeAnimo())
+}
+
+test "Hacer que un Sim cambie su estado de animo  de incomodo a normal cuando va a trabajar. " {
+	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 
+	const coto = new MercenarioSocial (0,5)
+	ernesto.modificarEstadoDeAnimo(incomodo)
+	ernesto.nuevoEmpleo(coto)
+	ernesto.trabajar()
+	assert.equals(normal,ernesto.estadoDeAnimo())
+}
+
+test "Hacer que un Sim desempleado conserve su estado de animo cuando va a trabajar  " {
+	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 
+	ernesto.modificarEstadoDeAnimo(incomodo)
+	ernesto.trabajar()
+	assert.equals(incomodo,ernesto.estadoDeAnimo())
+}

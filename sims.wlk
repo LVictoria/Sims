@@ -7,6 +7,7 @@
  import celos.*
  import estadosDeAnimo.*
  import abrazos.*
+ import nuevosTrabajos.*
  
  
 class Sim {
@@ -103,7 +104,7 @@ class Sim {
 	 }
 	 
 	 //Estado De Animo 
-	 method estadoDeAnimo(estado){
+	 method modificarEstadoDeAnimo(estado){
 	 	estadoDeAnimo = estado
 	 	estadoDeAnimo.efecto(self)
 	 }
@@ -238,6 +239,7 @@ class Sim {
 		//Piensen cómo modelar la ausencia de trabajo SIN utilizar nulls
 		self.ganarDinero(trabajoActual.sueldo(self))
 		trabajoActual.cambiarFelicidad(self)
+		trabajoActual.cambiarEstadoDeAnimo(self)
 		if(personalidad == buenazo){ 
 			personalidad.trabajaConSusAmigos()}
 		//FIXME acuérdense de formatear el código apropiadamente

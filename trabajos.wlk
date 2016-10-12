@@ -1,3 +1,5 @@
+import estadosDeAnimo.*
+
 class Trabajo {
 	var dinero 
 	var nivelDeFelicidad
@@ -13,6 +15,10 @@ class Trabajo {
 	method cambiarFelicidad(empleado) {
 		empleado.aumentarFelicidad(nivelDeFelicidad)
 	}
+	
+	method cambiarEstadoDeAnimo(empleado){
+		empleado.modificarEstadoDeAnimo(normal)
+	}
 }
 
 
@@ -25,6 +31,7 @@ class Copado inherits Trabajo {
 
 class Mercenario inherits Trabajo {
 	constructor(dinero,nivelDeFelicidad) = super(dinero,nivelDeFelicidad)
+	
 	override method sueldo(empleado) {
 		return 100 + empleado.dinero()*0.02
 	}	
@@ -45,6 +52,10 @@ object desempleado {
 	}
 	method cambiarFelicidad (desempleado) {
 		desempleado.aumentarFelicidad(0)
+	}
+	
+	method cambiarEstadoDeAnimo (desempleado){
+		desempleado.modificarEstadoDeAnimo(desempleado.estadoDeAnimo())
 	}
 }
 
