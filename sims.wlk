@@ -23,10 +23,10 @@ class Sim {
 	var informaciones = #{}
 	var estadoDeAnimo = normal
 	var estadoDeCelos
-	
+	var nivelDePopularidadAsignada
 	//FIXME modelar al estado de la pareja como un string es muy limitante, 
 	//porque no pueden asignarle comportamiento. Sugerencia: representar al estado de la pareja
-	//con objetos polimórficos �ARREGLADO?
+	//con objetos polimórficos �ARREGLADO?
 	
 	var pareja = soltero
 	var relacionActual 
@@ -34,14 +34,13 @@ class Sim {
 	//FIXME prefieran la convención unAlgo en lugar de _algo: menos chirimbolos, más felicidad :D . 
 	//ARREGLADO ! 
 	
-	constructor (unSexo, unEdad, unNivelDeFelicidad, unNivelDePopularidad, unaPersonalidad, unSexoPreferencia)
+	constructor (unSexo, unEdad, unNivelDeFelicidad, unaPersonalidad, unSexoPreferencia)
 
 	 {
 	 	sexoPreferencia = unSexoPreferencia
 	 	sexo = unSexo
 	 	edad = unEdad
 		nivelDeFelicidad = unNivelDeFelicidad
-		nivelDePopularidad = unNivelDePopularidad
 		personalidad = unaPersonalidad
 		
 	 }
@@ -90,7 +89,7 @@ class Sim {
 	method estadoDeAnimo(){
 		return estadoDeAnimo
 	}
-	
+	 
 	//Felicidad 
 	
 	 method aumentarFelicidad(cantidad){
@@ -121,10 +120,10 @@ class Sim {
 	//FIXME este método, por el nombre, parecería ser un getter. 
 	//Sin embargo, cada vez que se evalua, ¡produce un efecto!
 	//Dos envios sucesivos del mensaje `nivelDePopularidad()` deberían producir los mismos resultados 
-	// �Arreglado?
+	// �Arreglado?
 	
 	method obtenerNivelDePopularidad () {
-		nivelDePopularidad += amigos.sum{amigo => amigo.nivelDeFelicidad()}
+		nivelDePopularidad = amigos.sum{amigo => amigo.nivelDeFelicidad()} 
 		return nivelDePopularidad
 	}
 	
@@ -240,8 +239,7 @@ class Sim {
 		self.ganarDinero(trabajoActual.sueldo(self))
 		trabajoActual.cambiarFelicidad(self)
 		trabajoActual.cambiarEstadoDeAnimo(self)
-		if(personalidad == buenazo){ 
-			personalidad.trabajaConSusAmigos()}
+		personalidad.trabajaConSusAmigos(self)
 		//FIXME acuérdense de formatear el código apropiadamente
 		}
 	
@@ -285,7 +283,7 @@ class Sim {
 	
 	//FIXME noten que acá están utilizando de forma inconsistente el término `informacion`: 
 	//En el método anterior representa a un conocimiento individual, mientras que en el segundo representa
-	//a un conjunto de conocimientos  �Arreglado?
+	//a un conjunto de conocimientos  �Arreglado?
 	
 	
 	method modificarInformacion(modificacion) {

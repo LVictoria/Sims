@@ -1,9 +1,9 @@
 object soniador  {
 	method efecto(unSim){
-		//FIXME Â¡ojo que cuando sale del estado soÃ±ador, la amnesia se va!
+		//FIXME Â¡ojo que cuando sale del estado soÃ±ador, la amnesia se va !
 		
-		//Soñador (Nube de Gas): mientras tenga este estado de ánimo, el nivel de felicidad del Sim está por las nubes (1000 más lo que ya tenía),
-		// y no se acuerda de nada (se comporta como si no tuviera ningún conocimiento).  
+		//Soï¿½ador (Nube de Gas): mientras tenga este estado de ï¿½nimo, el nivel de felicidad del Sim estï¿½ por las nubes (1000 mï¿½s lo que ya tenï¿½a),
+		// y no se acuerda de nada (se comporta como si no tuviera ningï¿½n conocimiento).  
 		unSim.aumentarFelicidad(1000)
 		unSim.tenerAmnesia()
 		
