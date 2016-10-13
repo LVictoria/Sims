@@ -8,11 +8,11 @@
  import estadosDeAnimo.*
  import abrazos.*
  import nuevosTrabajos.*
- 
+
  
 class Sim {
 	var sexo 
-	var	edad
+	var edad
 	var nivelDeFelicidad
 	var amigos = []
 	var nivelDePopularidad
@@ -33,12 +33,12 @@ class Sim {
 	//FIXME prefieran la convención unAlgo en lugar de _algo: menos chirimbolos, más felicidad :D . 
 	//ARREGLADO ! 
 	
-	constructor (unSexo, unEdad, unNivelDeFelicidad, unaPersonalidad, unSexoPreferencia)
+	constructor (unSexo, unaEdad, unNivelDeFelicidad, unaPersonalidad, unSexoPreferencia)
 
 	 {
 	 	sexoPreferencia = unSexoPreferencia
 	 	sexo = unSexo
-	 	edad = unEdad
+	 	edad = unaEdad
 		nivelDeFelicidad = unNivelDeFelicidad
 		personalidad = unaPersonalidad
 		
@@ -96,6 +96,10 @@ class Sim {
 	 }
 	 
 	 // Edad 
+	 
+	 method cumplirAnos(){
+	 	edad += 1
+	 }
 	 
 	 method esJoven() {
 	 	return edad.between(18,29)
@@ -342,5 +346,13 @@ class Sim {
 	
 	
 }
-
-
+class Vim inherits Sim {
+	var edad = 18
+	
+	constructor (unSexo, unaEdad, unNivelDeFelicidad, unaPersonalidad, unSexoPreferencia) = super(unSexo, unaEdad, unNivelDeFelicidad, unaPersonalidad, unSexoPreferencia)
+	
+	override method cumplirAnos(){
+		edad += 0
+	}
+}	
+	
