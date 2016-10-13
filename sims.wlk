@@ -327,11 +327,13 @@ class Sim {
 		}
 	}	
 	method	chismeDe(unSim){
-		return unSim.informaciones.find({informacion => unSim.esSecreto(informacion)})
+		return unSim.informaciones().find({informacion => unSim.esSecreto(informacion)})
+	
+		}
 		
 	method desparramarChismeDe(unSim){
-		self.nuevaInformacion(chismeDe(unSim))
-		self.difundir(chismeDe(unSim))
+		self.nuevaInformacion(self.chismeDe(unSim))
+		self.difundir(self.chismeDe(unSim))
 	}
 		
 	//Celos
@@ -347,12 +349,11 @@ class Sim {
 	
 }
 class Vim inherits Sim {
-	var edad = 18
 	
-	constructor (unSexo, unaEdad, unNivelDeFelicidad, unaPersonalidad, unSexoPreferencia) = super(unSexo, unaEdad, unNivelDeFelicidad, unaPersonalidad, unSexoPreferencia)
+	constructor (unSexo, unaEdad, unNivelDeFelicidad, unaPersonalidad, unSexoPreferencia) = super(unSexo, 18, unNivelDeFelicidad, unaPersonalidad, unSexoPreferencia)
 	
 	override method cumplirAnos(){
-		edad += 0
+		edad +=0
 	}
 }	
 	
