@@ -23,7 +23,6 @@ class Sim {
 	var informaciones = #{}
 	var estadoDeAnimo = normal
 	var estadoDeCelos
-	var nivelDePopularidadAsignada
 	//FIXME modelar al estado de la pareja como un string es muy limitante, 
 	//porque no pueden asignarle comportamiento. Sugerencia: representar al estado de la pareja
 	//con objetos polimórficos �ARREGLADO?
@@ -218,8 +217,12 @@ class Sim {
 	
 
  	//Dinero y Trabajo 
-	method ganarDinero(_dinero) {
-		dinero += _dinero
+	method ganarDinero(unDinero) {
+		dinero += unDinero
+	}
+	method prestarDinero(unDinero)
+	{
+		dinero -=unDinero
 	}
 	
 	method dineroDeMisAmigos () {
@@ -311,6 +314,8 @@ class Sim {
 		self.aumentarFelicidad(-10)
 		tipoDeCelos.efectoCelos(self)	
 	}
+	
+	
 	
 	
 }
