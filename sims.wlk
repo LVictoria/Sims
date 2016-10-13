@@ -306,11 +306,30 @@ class Sim {
 		return informaciones.map{informacion => informacion.size()}.sum()
 	}
 	
-	method tieneElConocimiento(unaInfomacion){ 
+	method tieneElConocimiento(unaInfomacion) { 
 		return informaciones.contains(unaInfomacion)
 	}
 	
+	method esSecreto(unConocimiento) {
+		return self.tieneElConocimiento(unConocimiento) && amigos.all({amigo => not amigo.tieneElConocimiento(unConocimiento)})
+	}
 	
+	method difundir(unConocimiento) {
+		if(self.tieneElConocimiento(unConocimiento)){
+			amigos.forEach({amigo => amigo.difundir(unConocimiento)})
+		}
+		else { 
+			self.nuevaInformacion(unConocimiento)
+		}
+	}	
+	method	chismeDe(unSim){
+		return unSim.informaciones.find({informacion => unSim.esSecreto(informacion)})
+		
+	method desparramarChismeDe(unSim){
+		self.nuevaInformacion(chismeDe(unSim))
+		self.difundir(chismeDe(unSim))
+	}
+		
 	//Celos
 	
 	method ataqueDeCelos(tipoDeCelos){
