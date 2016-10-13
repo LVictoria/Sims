@@ -7,10 +7,10 @@ class Relacion {
 	
 	
 	constructor(unSim, otroSim) {
-		//FIXME ¿no les parece un poco complejo este código?
-		//¿No ven lógica repetida?  �ARREGLADO?
+		//FIXME Â¿no les parece un poco complejo este cÃ³digo?
+		//Â¿No ven lÃ³gica repetida?  ¿ARREGLADO?
 		
-		if(unSim.esSoltero() && otroSim.esSoltero()){
+		if(unSim.esSoltero() && otroSim.esSoltero() && not unSim.esJovenParaRelacion() && not otroSim.esJovenParaRelacion()){
 			sim1= unSim
 			sim2= otroSim
 			self.agregarCirculoDeAmigos()
