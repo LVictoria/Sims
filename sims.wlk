@@ -101,6 +101,10 @@ class Sim {
 	 	return edad.between(18,29)
 	 }
 	 
+	 method esJovenParaRelacion() {
+	 	return edad.between(0,16)
+	}
+	
 	 //Estado De Animo 
 	 method modificarEstadoDeAnimo(estado){
 	 	estadoDeAnimo = estado
