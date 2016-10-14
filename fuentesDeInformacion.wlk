@@ -1,21 +1,45 @@
-class Libros {
-  var capitulos
+import sims.*
+
+class FuenteDeInformacion {
+	var informacion = #{}
+	 
+	 method proveerInformacion (sim) {
+	 	sim.nuevaInformacion(self.pedirInformacion())
+	 }
+	 
+	 method pedirInformacion () {
+	 	return informacion
+	 }
+	  
+}
+
+
+class Libros inherits FuenteDeInformacion{
+  var capitulos = #{}
   
-  constructor(_capitulos) {
-  capitulos = _capitulos
+  constructor(unosCapitulos) {
+  capitulos = unosCapitulos
   }
   
-  method pedirInformacion() {
-    return capitulos.anyOne()
+  override method pedirInformacion () {
+  	return capitulos.anyOne()
   }
- }
- 
-object rial {
- method pedirInformacion() {
-    return "Esc√°ndalo"
+  
  }
 
-object tinelli {
- method pedirInformacion() {
-    return "Tot√≥"
+ 
+object rial inherits FuenteDeInformacion {
+ 	override method pedirInformacion () {
+  		return #{"Esc·ndalo"}
+  }
+ 	
+ }
+
+
+object tinelli inherits FuenteDeInformacion{
+
+ override method pedirInformacion () {
+  	return #{"TotÛ"}
+  }
+ 
  }

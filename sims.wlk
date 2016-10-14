@@ -8,11 +8,11 @@
  import estadosDeAnimo.*
  import abrazos.*
  import nuevosTrabajos.*
-
+ import fuentesDeInformacion.*
  
-class Sim {
+class Sim inherits FuenteDeInformacion {
 	var sexo 
-	var edad
+	var	edad
 	var nivelDeFelicidad
 	var amigos = []
 	var nivelDePopularidad
@@ -21,11 +21,14 @@ class Sim {
 	var trabajoActual = desempleado
 	var sexoPreferencia
 	var informaciones = #{}
+	var backup = #{}
+	var chismes=#{}
 	var estadoDeAnimo = normal
 	var estadoDeCelos
+	
 	//FIXME modelar al estado de la pareja como un string es muy limitante, 
 	//porque no pueden asignarle comportamiento. Sugerencia: representar al estado de la pareja
-	//con objetos polimórficos �ARREGLADO?
+	//con objetos polimórficos �ARREGLADO?
 	
 	var pareja = soltero
 	var relacionActual 
@@ -88,7 +91,7 @@ class Sim {
 	method estadoDeAnimo(){
 		return estadoDeAnimo
 	}
-	 
+	
 	//Felicidad 
 	
 	 method aumentarFelicidad(cantidad){
@@ -97,7 +100,7 @@ class Sim {
 	 
 	 // Edad 
 	 
-	 method cumplirAnos(){
+	 method cumplirAnios(){
 	 	edad += 1
 	 }
 	 
@@ -108,7 +111,7 @@ class Sim {
 	 method esJovenParaRelacion() {
 	 	return edad.between(0,16)
 	}
-	
+	 
 	 //Estado De Animo 
 	 method modificarEstadoDeAnimo(estado){
 	 	estadoDeAnimo = estado
@@ -127,10 +130,10 @@ class Sim {
 	//FIXME este método, por el nombre, parecería ser un getter. 
 	//Sin embargo, cada vez que se evalua, ¡produce un efecto!
 	//Dos envios sucesivos del mensaje `nivelDePopularidad()` deberían producir los mismos resultados 
-	// �Arreglado?
+	// �Arreglado?
 	
 	method obtenerNivelDePopularidad () {
-		nivelDePopularidad = amigos.sum{amigo => amigo.nivelDeFelicidad()} 
+		nivelDePopularidad += amigos.sum{amigo => amigo.nivelDeFelicidad()}
 		return nivelDePopularidad
 	}
 	
@@ -225,11 +228,11 @@ class Sim {
 	
 
  	//Dinero y Trabajo 
-	method ganarDinero(unDinero) {
-		dinero += unDinero
+	method ganarDinero(_dinero) {
+		dinero += _dinero
 	}
-	method prestarDinero(unDinero)
-	{
+	
+	method prestarDinero(unDinero){
 		dinero -=unDinero
 	}
 	
@@ -250,7 +253,8 @@ class Sim {
 		self.ganarDinero(trabajoActual.sueldo(self))
 		trabajoActual.cambiarFelicidad(self)
 		trabajoActual.cambiarEstadoDeAnimo(self)
-		personalidad.trabajaConSusAmigos(self)
+		if(personalidad == buenazo){ 
+			personalidad.trabajaConSusAmigos()}
 		//FIXME acuérdense de formatear el código apropiadamente
 		}
 	
@@ -294,7 +298,7 @@ class Sim {
 	
 	//FIXME noten que acá están utilizando de forma inconsistente el término `informacion`: 
 	//En el método anterior representa a un conocimiento individual, mientras que en el segundo representa
-	//a un conjunto de conocimientos  �Arreglado?
+	//a un conjunto de conocimientos  �Arreglado?
 	
 	
 	method modificarInformacion(modificacion) {
@@ -303,39 +307,59 @@ class Sim {
 	
 	
 	method tenerAmnesia() {
+		backup.addAll(informaciones)
 		informaciones = #{}
+		
 	}
 	
+	method recuperarInformacion(){
+		informaciones.addAll(backup)
+	}
+
 	method conocedor (){
 		return informaciones.map{informacion => informacion.size()}.sum()
 	}
 	
-	method tieneElConocimiento(unaInfomacion) { 
+	method tieneElConocimiento(unaInfomacion){ 
 		return informaciones.contains(unaInfomacion)
 	}
 	
 	method esSecreto(unConocimiento) {
-		return self.tieneElConocimiento(unConocimiento) && amigos.all({amigo => not amigo.tieneElConocimiento(unConocimiento)})
+		return self.tieneElConocimiento(unConocimiento) && self.nadieLoConoce(unConocimiento)
 	}
 	
-	method difundir(unConocimiento) {
-		if(self.tieneElConocimiento(unConocimiento)){
-			amigos.forEach({amigo => amigo.difundir(unConocimiento)})
+	method nadieLoConoce(unConocimiento){
+		return not(amigos.any({amigo => amigo.tieneElConocimiento(unConocimiento) }))
+	}
+	
+	method difundirInformacion(unConocimiento) {
+		if(not(self.tieneElConocimiento(unConocimiento))){
+			amigos.forEach({amigo => amigo.nuevaInformacion(unConocimiento)})
 		}
 		else { 
 			self.nuevaInformacion(unConocimiento)
 		}
 	}	
+	
 	method	chismeDe(unSim){
-		return unSim.informaciones().find({informacion => unSim.esSecreto(informacion)})
+		  return unSim.informacion().find({informacion => unSim.esSecreto(informacion)})
 	
 		}
 		
-	method desparramarChismeDe(unSim){
-		self.nuevaInformacion(self.chismeDe(unSim))
-		self.difundir(self.chismeDe(unSim))
+	method agregarChismeDe(unSim){
+		chismes.add(self.chismeDe(unSim))
 	}
+	
 		
+	method desparramarChisme(){
+		self.difundirInformacion(chismes.anyOne())
+	}
+	
+	override method pedirInformacion(){
+		return chismes.anyOne()
+	}
+	
+	
 	//Celos
 	
 	method ataqueDeCelos(tipoDeCelos){
@@ -345,15 +369,16 @@ class Sim {
 	}
 	
 	
-	
-	
 }
+
+
 class Vim inherits Sim {
 	
 	constructor (unSexo, unaEdad, unNivelDeFelicidad, unaPersonalidad, unSexoPreferencia) = super(unSexo, 18, unNivelDeFelicidad, unaPersonalidad, unSexoPreferencia)
 	
-	override method cumplirAnos(){
+	override method cumplirAnios(){
 		edad +=0
 	}
 }	
-	
+
+

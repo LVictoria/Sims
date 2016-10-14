@@ -1,0 +1,45 @@
+import sims.*
+import fuentesDeInformacion.*
+import personalidades.*
+
+
+test "Saber si un conocimiento es privado. El contenido no es privado" {
+	const ernesto = new Sim("Hombre",19,90,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	ernesto.nuevaInformacion('fechas de finales')
+	ernesto.nuevaInformacion('contenidos de pdep')
+	maria.nuevaInformacion('contenidos de pdep')
+	ernesto.hacerseAmigo(maria)
+	assert.notThat(ernesto.esSecreto('contenidos de pdep'))
+	
+}
+
+test  "Saber si un conocimiento es privado. El contenido  es privado " {
+	const ernesto = new Sim("Hombre",19,90,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	ernesto.nuevaInformacion('fechas de finales')
+	ernesto.nuevaInformacion('contenidos de pdep')
+	maria.nuevaInformacion('contenidos de pdep')
+	ernesto.hacerseAmigo(maria)
+	assert.that(ernesto.esSecreto('fechas de finales'))
+}
+
+test "Hacer que un Sim difunda una Informacion"{
+	const ernesto = new Sim("Hombre",19,90,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	ernesto.nuevaInformacion('contenidos de pdep')
+	ernesto.hacerseAmigo(maria)
+	ernesto.difundirInformacion('fechas de finales')
+	assert.equals(#{'fechas de finales'}, maria.informacion())
+}
+
+test "Hacer que un Sim desparrame un chisme" {
+	const ernesto = new Sim("Hombre",19,90,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	const hector = new Sim("Hombre",23,11,buenazo,"Mujer")
+	ernesto.nuevaInformacion('todas las materias promocionables')
+	maria.agregarChismeDe(ernesto)
+	maria.hacerseAmigo(hector)
+	maria.desparramarChisme()
+	assert.equals(#{'todas las materias promocionables'},ernesto.informacion())
+}

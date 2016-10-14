@@ -18,6 +18,7 @@ class Trabajo {
 	
 	method cambiarEstadoDeAnimo(empleado){
 		empleado.modificarEstadoDeAnimo(normal)
+		empleado.recuperarInformacion()
 	}
 }
 

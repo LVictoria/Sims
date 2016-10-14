@@ -9,10 +9,6 @@ object interesado {
 	method atraccion(simAtractivo, sim){
 		return (simAtractivo.dinero() *2 > sim.dinero() ) 
 		}
-	method prestar(simDeudor, dinero)
-	{
-		return simDeudor.dinero() > dinero
-	}
 }
 
 object superficial {
@@ -24,10 +20,6 @@ object superficial {
 	
 	method atraccion(simAtractivo, sim) {
 		return sim.amigoMasPopular().obtenerNivelDePopularidad()  <= simAtractivo.obtenerNivelDePopularidad() && simAtractivo.esJoven()
-	}
-	method prestar(simDeudor, dinero)
-	{
-		return true
 	}
 	
 }
@@ -46,10 +38,6 @@ object buenazo {
 	method atraccion(simAtractivo,sim){
 		return true
 	}
-	method prestar(simDeudor, dinero)
-	{
-		return true
-	}
 }
 
 
@@ -62,9 +50,5 @@ object peleadoConLaVida {
 
 	method atraccion(unSimAtractivo, unSim){
 		return unSimAtractivo.nivelDeFelicidad() < 200
-	}
-	method prestar(simDeudor, dinero)
-	{
-		return true
 	}
 }

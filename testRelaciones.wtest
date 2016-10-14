@@ -6,98 +6,98 @@
  import estadosDeAnimo.*
  import abrazos.*
  
-test "Hacer que dos Sims inicien una relación. Ernesto es pareja de maria" {
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+test "Hacer que dos Sims inicien una relacion. Ernesto es pareja de maria" {
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
 	new Relacion(ernesto,maria)
 	assert.equals(ernesto,maria.pareja())
 	
 }
 
-test "Hacer que dos Sims inicien una relación. Maria es pareja de Ernesto" {
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+test "Hacer que dos Sims inicien una relacion. Maria es pareja de Ernesto" {
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
 	 new Relacion(ernesto,maria)
 	assert.equals(maria,ernesto.pareja())
 	
 }
 
 
-test "Saber si un Sim forma parte de una relación" {
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+test "Saber si un Sim forma parte de una relacion" {
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
 	const ernestoYMaria = new Relacion (maria,ernesto)
 	assert.that(ernestoYMaria.formaParte(maria))
 }
 
-test "Conocer el círculo de amigos de la relación" {
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
-	const ernestoYMaria = new Relacion(ernesto,maria)
-	const hector= new Sim("Hombre",23,100,50,peleadoConLaVida,"Mujer")
-	const jose= new Sim("Hombre",30,100,50,superficial,"Mujer")
-	const julia = new Sim("Mujer",19,44,545,interesado,"Hombre")
+test "Conocer el círculo de amigos de la relacion" {
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	const hector= new Sim("Hombre",23,100,peleadoConLaVida,"Mujer")
+	const jose= new Sim("Hombre",30,100,superficial,"Mujer")
+	const julia = new Sim("Mujer",19,44,interesado,"Hombre")
 	ernesto.hacerseAmigo(julia)
 	ernesto.hacerseAmigo(jose)
 	maria.hacerseAmigo(hector)
 	maria.hacerseAmigo(jose)
+	const ernestoYMaria = new Relacion(ernesto,maria)
 	assert.equals(#{julia,jose,hector},ernestoYMaria.circuloDeAmigos())
 
 }
 
-test "Conocer los miembros de una relación " {
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+test "Conocer los miembros de una relacion " {
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
 	const ernestoYMaria = new Relacion(ernesto,maria)
 	assert.equals(#{ernesto,maria}, ernestoYMaria.miembros())
 }
 
 test "Saber si una relación funciona"{
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
 	const ernestoYMaria = new Relacion(ernesto,maria)
 	assert.that(ernestoYMaria.relacionFunciona())
 }
 
 test "Saber si se pudre todo " {
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Mujer")
-	const julia = new Sim("Mujer",19,44,368,buenazo,"Hombre")
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Mujer")
+	const julia = new Sim("Mujer",19,44,buenazo,"Hombre")
 	const ernestoYMaria = new Relacion(ernesto,maria)
 	ernesto.hacerseAmigo(julia)
 	assert.that(ernestoYMaria.sePudreTodo())
 }
 
 test "No se deberia pudrir todo y no se pudre" {
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
-	const julia = new Sim("Mujer",19,44,368,buenazo,"Hombre")
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	const julia = new Sim("Mujer",19,44,buenazo,"Hombre")
 	const ernestoYMaria = new Relacion(ernesto,maria)
 	ernesto.hacerseAmigo(julia)
 	assert.notThat(ernestoYMaria.sePudreTodo())
 }
 
-test "Hacer que una relación termine, haciendo que sus miembros dejen de formar parte de ella." {
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+test "Hacer que una relacion termine, haciendo que sus miembros dejen de formar parte de ella." {
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
 	const ernestoYMaria = new Relacion(ernesto,maria)
 	ernestoYMaria.terminarRelacion()
 	assert.equals(#{},ernestoYMaria.miembros())
 	}
 	
-test "Saber si una relación terminó."{
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+test "Saber si una relacion termino."{
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
 	const ernestoYMaria = new Relacion(ernesto,maria)
 	ernestoYMaria.terminarRelacion()
 	assert.that(ernestoYMaria.terminoLaRelacion())
 }
 
 test "Se reestablece la relacion de Hector y Maria" {
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
-	const hector= new Sim("Hombre",23,100,50,peleadoConLaVida,"Mujer")
-	const jose= new Sim("Hombre",30,100,50,superficial,"Mujer")
-	const julia = new Sim("Mujer",19,44,545,interesado,"Hombre")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	const hector= new Sim("Hombre",23,100,peleadoConLaVida,"Mujer")
+	const jose= new Sim("Hombre",30,100,superficial,"Mujer")
+	const julia = new Sim("Mujer",19,44,interesado,"Hombre")
 	const mariaYJose = new Relacion(maria, jose)
 	const hectorYJulia = new Relacion(hector, julia)
 	mariaYJose.terminarRelacion()

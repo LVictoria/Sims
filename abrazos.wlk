@@ -11,10 +11,10 @@ object abrazoProlongado {
 	method resultadoAbrazo(abrazador, abrazado)
 	{
 		if(abrazado.atraccion(abrazador)){
-			abrazado.estadoDeAnimo(soniador)
+			abrazado.modificarEstadoDeAnimo(soniador)
 		}
 		else
 		{
-			abrazado.estadoDeAnimo(incomodo)
+			abrazado.modificarEstadoDeAnimo(incomodo)
 		}
 	}}

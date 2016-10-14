@@ -7,25 +7,25 @@
  import abrazos.*
 
 test "Cuanto valora un Sim a otro, personalidad buenazo " {
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
 	assert.equals(500,ernesto.valorar(maria))
 }
 
 
 
 test "Cuanto valora un Sim a otro,personalidad superficial " {
-	const ernesto = new Sim("Hombre",19,1000,100,superficial,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,superficial,"Hombre")
+	const ernesto = new Sim("Hombre",19,1000,superficial,"Mujer")
+	const maria = new Sim("Mujer",19,100,superficial,"Hombre")
 	assert.equals(2000,ernesto.valorar(maria))
 
 }
 
 test "Cuanto valora un Sim a otro, personalidad interesado " {
-	const pablo = new Sim("Hombre", 19, 1000, 100, interesado, "Mujer")
-	const juan = new Sim("Hombre", 19, 1000, 100, interesado, "Mujer")
-	const ernesto = new Sim ("Hombre",19,1000,100,interesado,"Mujer")
-	const maria = new Sim ("Mujer",19,100,100,interesado,"Hombre")
+	const pablo = new Sim("Hombre", 19, 1000,  interesado, "Mujer")
+	const juan = new Sim("Hombre", 19, 1000, interesado, "Mujer")
+	const ernesto = new Sim ("Hombre",19,1000,interesado,"Mujer")
+	const maria = new Sim ("Mujer",19,100,interesado,"Hombre")
 	ernesto.hacerseAmigo(juan)
 	ernesto.hacerseAmigo(pablo)
 	juan.ganarDinero(500)
@@ -36,9 +36,9 @@ test "Cuanto valora un Sim a otro, personalidad interesado " {
 
  
 test "Saber quien es el amigo a quien más valora un Sim, personalidad buenazo"  {
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
-	const hector= new Sim("Hombre",23,100,100,peleadoConLaVida,"Mujer")
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	const hector= new Sim("Hombre",23,100,peleadoConLaVida,"Mujer")
 	ernesto.hacerseAmigo(maria)
 	ernesto.hacerseAmigo(hector)
 	assert.equals(maria,ernesto.amigoMasValorado())

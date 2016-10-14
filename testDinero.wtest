@@ -7,7 +7,7 @@
  import abrazos.*
 
 test "Hacer que un Sim vaya a trabajar a un empleo copado , verificar nivelDeFelicidad" {
-	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 
+	const ernesto = new Sim("Hombre",19,90,peleadoConLaVida,"Mujer") 
 	const coto = new Copado (300,5)
 	ernesto.nuevoEmpleo(coto)
 	ernesto.trabajar()
@@ -16,7 +16,7 @@ test "Hacer que un Sim vaya a trabajar a un empleo copado , verificar nivelDeFel
 }
 
 test "Hacer que un Sim vaya a trabajar a un empleo copado ,verificar dinero" {
-	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 
+	const ernesto = new Sim("Hombre",19,90,peleadoConLaVida,"Mujer") 
 	const coto = new Copado (300,5)
 	ernesto.nuevoEmpleo(coto)
 	ernesto.trabajar()
@@ -24,7 +24,7 @@ test "Hacer que un Sim vaya a trabajar a un empleo copado ,verificar dinero" {
 }
 
 test "Hacer que un Sim vaya a trabajar a un empleo aburrido , verificar nivelDeFelicidad" {
-	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 
+	const ernesto = new Sim("Hombre",19,90,peleadoConLaVida,"Mujer") 
 	const coto = new Aburrido (300,5)
 	ernesto.nuevoEmpleo(coto)
 	ernesto.trabajar()
@@ -33,7 +33,7 @@ test "Hacer que un Sim vaya a trabajar a un empleo aburrido , verificar nivelDeF
 }
 
 test "Hacer que un Sim vaya a trabajar a un empleo aburrido  ,verificar dinero" {
-	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 
+	const ernesto = new Sim("Hombre",19,90,peleadoConLaVida,"Mujer") 
 	const coto = new Aburrido (300,5)
 	ernesto.nuevoEmpleo(coto)
 	ernesto.trabajar()
@@ -41,7 +41,7 @@ test "Hacer que un Sim vaya a trabajar a un empleo aburrido  ,verificar dinero" 
 }
 
 test "Hacer que un Sim vaya a trabajar a un empleo mercenario , verificar nivelDeFelicidad" {
-	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 
+	const ernesto = new Sim("Hombre",19,90,peleadoConLaVida,"Mujer") 
 	const coto = new Mercenario (300,5)
 	ernesto.nuevoEmpleo(coto)
 	ernesto.trabajar()
@@ -51,7 +51,7 @@ test "Hacer que un Sim vaya a trabajar a un empleo mercenario , verificar nivelD
 
 
 test "Hacer que un Sim vaya a trabajar a un empleo mercenario  ,verificar dinero" {
-	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 
+	const ernesto = new Sim("Hombre",19,90,peleadoConLaVida,"Mujer") 
 	const coto = new Mercenario (0,0)
 	ernesto.nuevoEmpleo(coto)
 	ernesto.ganarDinero(4000)
@@ -61,7 +61,7 @@ test "Hacer que un Sim vaya a trabajar a un empleo mercenario  ,verificar dinero
 
 
 test "Hacer que un Sim vaya a trabajar, sim desocupado, verificar que no haya cambios en nivelDeFelicidad" {
-	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 
+	const ernesto = new Sim("Hombre",19,90,peleadoConLaVida,"Mujer") 
 	ernesto.trabajar()
 	assert.equals(90,ernesto.nivelDeFelicidad())
 	
@@ -69,7 +69,7 @@ test "Hacer que un Sim vaya a trabajar, sim desocupado, verificar que no haya ca
 
 
 test "Hacer que un Sim vaya a trabajar, sim desocupado, verificar que no haya cambios en el dinero " {
-	const ernesto = new Sim("Hombre",19,90,100,peleadoConLaVida,"Mujer") 
+	const ernesto = new Sim("Hombre",19,90,peleadoConLaVida,"Mujer") 
 	ernesto.trabajar()
 	assert.equals(0,ernesto.dinero())
 	

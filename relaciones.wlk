@@ -7,8 +7,8 @@ class Relacion {
 	
 	
 	constructor(unSim, otroSim) {
-		//FIXME Â¿no les parece un poco complejo este cÃ³digo?
-		//Â¿No ven lÃ³gica repetida?  ¿ARREGLADO?
+		//FIXME ¿no les parece un poco complejo este código?
+		//¿No ven lógica repetida?  �ARREGLADO?
 		
 		if(unSim.esSoltero() && otroSim.esSoltero() && not unSim.esJovenParaRelacion() && not otroSim.esJovenParaRelacion()){
 			sim1= unSim
@@ -18,7 +18,7 @@ class Relacion {
 			self.iniciarRelacion(sim2,sim1)
 		}
 		else{
-		 error.throwWithMessage("No estan solteros")}
+		 error.throwWithMessage("No pueden iniciar la relaci�n")}
 	}	
 	
 	
@@ -88,5 +88,3 @@ object soltero {
 		sim.pareja(self)
 	}
 }
-
-

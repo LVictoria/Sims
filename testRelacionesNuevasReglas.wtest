@@ -1,0 +1,22 @@
+ import sims.*
+ import personalidades.*
+ import trabajos.*
+ import relaciones.*
+ import celos.*
+ import estadosDeAnimo.*
+ import abrazos.*
+ 
+test "Un Sim está en pareja con otra persona" {
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	const julia = new Sim("Mujer",19,44,interesado,"Hombre")
+	new Relacion (maria,ernesto)
+	assert.throwsException({ new Relacion(julia, ernesto)})
+}
+
+test "Un Sim no tiene 16 anios" {
+	const ernesto = new Sim("Hombre",10,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	assert.throwsException({ new Relacion( ernesto,maria)})
+	
+}

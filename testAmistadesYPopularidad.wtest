@@ -8,51 +8,51 @@
  
 
 test "Hacer que un Sim se haga amigo de otro(Ernesto se hace amigo de Maria, pero ella no)"{
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
 	ernesto.hacerseAmigo(maria)
 	assert.that(ernesto.esAmigo(maria))
 }
 
 test "Hacer que un Sim se haga amigo de otro (Ernesto se hace amigo de Maria, pero ella no)"{
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
 	ernesto.hacerseAmigo(maria)
 	assert.notThat(maria.esAmigo(ernesto))
 }
 
 
  test "Hacer que dos Sims se hagan amigos entre sí (Ernesto es amigo de Maria)"{
- 	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+ 	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
 	ernesto.hacerseAmigo(maria)
 	maria.hacerseAmigo(ernesto)
 	assert.that(ernesto.esAmigo(maria))
  }
  
 test "Hacer que dos Sims se hagan amigos entre sí (Maria es amigo de Ernesto)" {
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
 	ernesto.hacerseAmigo(maria)
 	maria.hacerseAmigo(ernesto)
 	assert.that(maria.esAmigo(ernesto))
 }
 
 test "Saber si un Sim es amigo de otro"{
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
 	ernesto.hacerseAmigo(maria)
 	assert.that(ernesto.esAmigo(maria))
 	
 }
 
 test "Preguntarle a un Sim cuales son sus 4 amigos más nuevos" {
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
-	const hector= new Sim("Hombre",23,100,50,peleadoConLaVida,"Mujer")
-	const jose= new Sim("Hombre",30,100,50,superficial,"Mujer")
-	const julia = new Sim("Mujer",19,44,545,interesado,"Hombre")
-	const marcos = new Sim("Hombre",37,500,1000,buenazo,"Mujer")
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	const hector= new Sim("Hombre",23,100,peleadoConLaVida,"Mujer")
+	const jose= new Sim("Hombre",30,100,superficial,"Mujer")
+	const julia = new Sim("Mujer",19,44,interesado,"Hombre")
+	const marcos = new Sim("Hombre",37,500,buenazo,"Mujer")
 	ernesto.hacerseAmigo(maria)
 	ernesto.hacerseAmigo(julia)
 	ernesto.hacerseAmigo(jose)
@@ -61,21 +61,21 @@ test "Preguntarle a un Sim cuales son sus 4 amigos más nuevos" {
 	assert.equals([julia,jose,hector,marcos],ernesto.buscarAmigos("Recientes",4))
 }
 test "Preguntarle a un Sim cuales son sus 4 amigos más recientes, que el Sim no posea tantos amigos"{
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
-	const hector= new Sim("Hombre",23,100,50,peleadoConLaVida,"Mujer")
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	const hector= new Sim("Hombre",23,100,peleadoConLaVida,"Mujer")
 	ernesto.hacerseAmigo(maria)
 	ernesto.hacerseAmigo(hector)
 	assert.throwsException({ernesto.buscarAmigos("Recientes",4)})
 }
 
 test "Preguntarle a un Sim cuales son sus 4 amigos más antiguos" {
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
-	const hector= new Sim("Hombre",23,100,50,peleadoConLaVida,"Mujer")
-	const jose= new Sim("Hombre",30,100,50,superficial,"Mujer")
-	const julia = new Sim("Mujer",19,44,545,interesado,"Hombre")
-	const marcos = new Sim("Hombre",37,500,1000,buenazo,"Mujer")
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	const hector= new Sim("Hombre",23,100,peleadoConLaVida,"Mujer")
+	const jose= new Sim("Hombre",30,100,superficial,"Mujer")
+	const julia = new Sim("Mujer",19,44,interesado,"Hombre")
+	const marcos = new Sim("Hombre",37,500,buenazo,"Mujer")
 	ernesto.hacerseAmigo(maria)
 	ernesto.hacerseAmigo(julia)
 	ernesto.hacerseAmigo(jose)
@@ -85,31 +85,31 @@ test "Preguntarle a un Sim cuales son sus 4 amigos más antiguos" {
 }
 
 test "Preguntarle a un Sim cuales son sus 4 amigos más antiguos, que el Sim no posea tantos amigos"{
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
-	const hector= new Sim("Hombre",23,100,50,peleadoConLaVida,"Mujer")
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	const hector= new Sim("Hombre",23,100,peleadoConLaVida,"Mujer")
 	ernesto.hacerseAmigo(maria)
 	ernesto.hacerseAmigo(hector)
 	assert.throwsException({ernesto.buscarAmigos("Antiguos",4)})
 }
 
 
-test "Preguntarle a un Sim cual es su nivel de popularidad"{
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	assert.equals(100,ernesto.obtenerNivelDePopularidad())
+test "Preguntarle a un Sim cual es su nivel de popularidad, y no posee amigos"{
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	assert.equals(0,ernesto.obtenerNivelDePopularidad())
 }
 
 test "Preguntarle a un Sim cual es su nivel de popularidad y tiene amigos"{
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
 	ernesto.hacerseAmigo(maria)
-	assert.equals(200,ernesto.obtenerNivelDePopularidad())
+	assert.equals(100,ernesto.obtenerNivelDePopularidad())
 }
 
 test "Preguntarle a un Sim si es el más popular de su círculo de amigos" {
-	const ernesto = new Sim("Hombre",19,1000,100,buenazo,"Mujer")
-	const maria = new Sim("Mujer",19,100,100,buenazo,"Hombre")
-	const hector= new Sim("Hombre",23,100,50,peleadoConLaVida,"Mujer")
+	const ernesto = new Sim("Hombre",19,1000,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	const hector= new Sim("Hombre",23,100,peleadoConLaVida,"Mujer")
 	ernesto.hacerseAmigo(maria)
 	ernesto.hacerseAmigo(hector)
 	assert.that(ernesto.esPopular())
