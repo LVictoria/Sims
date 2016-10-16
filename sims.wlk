@@ -9,6 +9,7 @@
  import abrazos.*
  import nuevosTrabajos.*
  import fuentesDeInformacion.*
+ import prestamos.*
  
 class Sim inherits FuenteDeInformacion {
 	var sexo 
@@ -92,6 +93,9 @@ class Sim inherits FuenteDeInformacion {
 		return estadoDeAnimo
 	}
 	
+	method edad() {
+		return edad 
+	}
 	//Felicidad 
 	
 	 method aumentarFelicidad(cantidad){
@@ -228,8 +232,8 @@ class Sim inherits FuenteDeInformacion {
 	
 
  	//Dinero y Trabajo 
-	method ganarDinero(_dinero) {
-		dinero += _dinero
+	method ganarDinero(unDinero) {
+		dinero += unDinero
 	}
 	
 	method prestarDinero(unDinero){

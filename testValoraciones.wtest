@@ -21,6 +21,14 @@ test "Cuanto valora un Sim a otro,personalidad superficial " {
 
 }
 
+test "Cuanto valora un Sim a otro,personalidad peleado con la vida " {
+	const ernesto = new Sim("Hombre",19,1000,peleadoConLaVida,"Mujer")
+	const maria = new Sim("Mujer",19,100,superficial,"Hombre")
+	assert.equals(0,ernesto.valorar(maria))
+
+}
+
+
 test "Cuanto valora un Sim a otro, personalidad interesado " {
 	const pablo = new Sim("Hombre", 19, 1000,  interesado, "Mujer")
 	const juan = new Sim("Hombre", 19, 1000, interesado, "Mujer")

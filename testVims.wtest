@@ -1,0 +1,20 @@
+import sims.*
+import personalidades.*
+
+test "Hacer que un Sim cumpla años " {
+	const ernesto = new Sim("Hombre",19,100,buenazo,"Mujer")
+	ernesto.cumplirAnios()
+	assert.equals(20, ernesto.edad())
+
+}
+
+
+test "Hacer que un Vim cumpla años " {
+	const edward = new Vim("Hombre",18,100,peleadoConLaVida,"Mujer")
+	edward.cumplirAnios()
+	assert.equals(18, edward.edad())
+
+}
+
+// Si un Vim muerde a un Sim y este se convierte en vampiro, deberiamos hacer un override del metodo cumplir años y,
+//  a demás se debería cambiar la edad actual del sim para que siempre tenga 18 años.

@@ -1,0 +1,74 @@
+import sims.* 
+import personalidades.*
+import prestamos.*
+
+
+test "Saber cuanto dinero está dispuesto a prestarle un Sim a otro, personalidad buenazo " {
+	const ernesto = new Sim("Hombre",19,100,buenazo,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	ernesto.hacerseAmigo(maria)
+	ernesto.ganarDinero(500)
+	const prestamoErnestoAMaria= new Prestamo (ernesto,maria,100)
+	assert.equals(750, prestamoErnestoAMaria.valorAPrestar())
+
+}
+
+test "Saber cuanto dinero está dispuesto a prestarle un Sim a otro, personalidad superficial"{
+	const ernesto = new Sim("Hombre",19,100,superficial,"Mujer")
+	const maria = new Sim("Mujer",19,10,buenazo,"Hombre")
+	ernesto.hacerseAmigo(maria)
+	ernesto.ganarDinero(500)
+	const prestamoErnestoAMaria= new Prestamo (ernesto,maria,100)
+	assert.equals(2000,prestamoErnestoAMaria.valorAPrestar())
+}
+
+test "Saber cuanto dinero está dispuesto a prestarle un Sim a otro, personalidad peleado con la vida "{
+	const ernesto = new Sim("Hombre",19,100,peleadoConLaVida,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	ernesto.hacerseAmigo(maria)
+	ernesto.ganarDinero(500)
+	const prestamoErnestoAMaria= new Prestamo (ernesto,maria,100)
+	assert.equals(0,prestamoErnestoAMaria.valorAPrestar())
+}
+
+test "Saber cuanto dinero está dispuesto a prestarle un Sim a otro, personalidad interesado "{
+	const ernesto = new Sim("Hombre",19,100,interesado,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	ernesto.ganarDinero(500)
+	maria.ganarDinero(400)
+	maria.hacerseAmigo(ernesto)
+	const prestamoErnestoAMaria= new Prestamo (ernesto,maria,100)
+	assert.equals(500,prestamoErnestoAMaria.valorAPrestar())
+}
+
+test "Hacer que un Sim preste una cantidad de dinero solicitada a otro Sim, puede prestar"{
+	const ernesto = new Sim("Hombre",19,100,superficial,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	ernesto.ganarDinero(500)
+	ernesto.hacerseAmigo(maria)
+	const prestamoErnestoAMaria= new Prestamo (ernesto,maria,100)
+	prestamoErnestoAMaria.realizarPrestamo()
+	assert.equals(100,maria.dinero())
+}
+
+
+test "Hacer que un Sim preste una cantidad de dinero solicitada a otro Sim, no puede prestar, no le alcanza el dinero "{
+	const ernesto = new Sim("Hombre",19,100,superficial,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	ernesto.hacerseAmigo(maria)
+	ernesto.ganarDinero(50)
+	maria.ganarDinero(100)
+	const prestamoErnestoAMaria= new Prestamo (ernesto,maria,100)
+	assert.throwsException({prestamoErnestoAMaria.realizarPrestamo()})
+}
+
+
+test "Hacer que un Sim preste una cantidad de dinero solicitada a otro Sim, no puede prestar  por ser interesado  "{
+	const ernesto = new Sim("Hombre",19,100,interesado,"Mujer")
+	const maria = new Sim("Mujer",19,100,buenazo,"Hombre")
+	ernesto.ganarDinero(350)
+	maria.ganarDinero(00)
+	ernesto.hacerseAmigo(maria)
+	const prestamoErnestoAMaria= new Prestamo (ernesto,maria,100)
+	assert.throwsException({prestamoErnestoAMaria.realizarPrestamo()})
+}
