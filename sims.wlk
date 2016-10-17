@@ -29,7 +29,7 @@ class Sim inherits FuenteDeInformacion {
 	
 	//FIXME modelar al estado de la pareja como un string es muy limitante, 
 	//porque no pueden asignarle comportamiento. Sugerencia: representar al estado de la pareja
-	//con objetos polimórficos �ARREGLADO?
+	//con objetos polimórficos �ARREGLADO?
 	
 	var pareja = soltero
 	var relacionActual 
@@ -134,7 +134,7 @@ class Sim inherits FuenteDeInformacion {
 	//FIXME este método, por el nombre, parecería ser un getter. 
 	//Sin embargo, cada vez que se evalua, ¡produce un efecto!
 	//Dos envios sucesivos del mensaje `nivelDePopularidad()` deberían producir los mismos resultados 
-	// �Arreglado?
+	// �Arreglado?
 	
 	method obtenerNivelDePopularidad () {
 		nivelDePopularidad += amigos.sum{amigo => amigo.nivelDeFelicidad()}
@@ -257,8 +257,7 @@ class Sim inherits FuenteDeInformacion {
 		self.ganarDinero(trabajoActual.sueldo(self))
 		trabajoActual.cambiarFelicidad(self)
 		trabajoActual.cambiarEstadoDeAnimo(self)
-		if(personalidad == buenazo){ 
-			personalidad.trabajaConSusAmigos()}
+		personalidad.trabajaConSusAmigos()
 		//FIXME acuérdense de formatear el código apropiadamente
 		}
 	
@@ -302,7 +301,7 @@ class Sim inherits FuenteDeInformacion {
 	
 	//FIXME noten que acá están utilizando de forma inconsistente el término `informacion`: 
 	//En el método anterior representa a un conocimiento individual, mientras que en el segundo representa
-	//a un conjunto de conocimientos  �Arreglado?
+	//a un conjunto de conocimientos  �Arreglado?
 	
 	
 	method modificarInformacion(modificacion) {

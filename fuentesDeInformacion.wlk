@@ -14,7 +14,7 @@ class FuenteDeInformacion {
 }
 
 
-class Libros inherits FuenteDeInformacion{
+class Libro inherits FuenteDeInformacion{
   var capitulos = #{}
   
   constructor(unosCapitulos) {
@@ -30,7 +30,7 @@ class Libros inherits FuenteDeInformacion{
  
 object rial inherits FuenteDeInformacion {
  	override method pedirInformacion () {
-  		return #{"Escándalo"}
+  		return #{"Escandalo"}
   }
  	
  }
@@ -39,7 +39,7 @@ object rial inherits FuenteDeInformacion {
 object tinelli inherits FuenteDeInformacion{
 
  override method pedirInformacion () {
-  	return #{"Totó"}
+  	return #{"Toto"}
   }
  
  }
