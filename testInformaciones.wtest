@@ -5,14 +5,15 @@
  import celos.*
  import estadosDeAnimo.*
  import abrazos.*
+ import fuentesDeInformacion.*
 
-test "Contarle una informaciÛn a un Sim"{
+test "Contarle una informaci√≥n a un Sim"{
 	const ernesto = new Sim("Hombre",19,90,buenazo,"Mujer")
 	ernesto.nuevaInformacion('contenidos de pdep')
 	assert.equals(#{'contenidos de pdep'},ernesto.informacion())
 }
 
-test "Saber cu·n conocedor es un Sim"{
+test "Saber cu√°n conocedor es un Sim"{
 	const ernesto = new Sim("Hombre",19,90,buenazo,"Mujer")
 	ernesto.nuevaInformacion('contenidos de pdep')
 	assert.equals(18,ernesto.conocedor())
@@ -29,4 +30,31 @@ test "Saber si un Sim tiene un conocimiento dado"{
 	const ernesto = new Sim("Hombre",19,90,buenazo,"Mujer")
 	ernesto.nuevaInformacion('contenidos de pdep')
 	assert.that(ernesto.tieneElConocimiento('contenidos de pdep'))
+}
+
+test "Hacer que un Sim le pida informacion a Tinelli"{
+	const ernesto = new Sim("Hombre",19,90,buenazo,"Mujer")
+	assert.equals(#{"Toto"},tinelli.pedirInformacion())
+}
+
+test "Hacer que un Sim le pida informacion a Rial"{
+	const ernesto = new Sim("Hombre",19,90,buenazo,"Mujer")
+	assert.equals(#{"Escandalo"},ernesto.pedirInformacion())
+}
+
+test "Hacer que un Sim le pida informacion a Libro"{
+	const ernesto = new Sim("Hombre",19,90,buenazo,"Mujer")
+	const libro = new Libro(#'{capitulo1'})
+	ernesto.nuevaInformacion(libro.pedirInformacion())
+	assert.that(ernesto.informacion().contains('capitulo1'))
+}
+
+test "Hacer que un Sim le pida informacion a Sim"{
+	const pedro = new Sim("Hombre",20,60,buenazo,"Mujer")
+	const ernesto = new Sim("Hombre",19,90,buenazo,"Mujer")
+	const maria = new Sim("Mujer",23,40,superficial,"Mujer")
+	maria.nuevaInformacion('contenidos de pdep')
+	pedro.agregarChismeDe(unSim)
+	ernesto.nuevaInformacion(pedro.pedirInformacion())
+	assert.that(ernesto.informacion().contains('contenidos de pdep'))
 }
