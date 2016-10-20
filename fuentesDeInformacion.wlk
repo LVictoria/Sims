@@ -1,21 +1,18 @@
 import sims.*
 
 class FuenteDeInformacion {
-	var informacion = #{}
 	 
 	 method proveerInformacion (sim) {
 	 	sim.nuevaInformacion(self.pedirInformacion())
 	 }
 	 
-	 method pedirInformacion () {
-	 	return informacion
-	 }
+	 method pedirInformacion () { return null }
 	  
 }
 
 
 class Libro inherits FuenteDeInformacion{
-  var capitulos = #{}
+  var capitulos
   
   constructor(unosCapitulos) {
   capitulos = unosCapitulos
@@ -29,8 +26,8 @@ class Libro inherits FuenteDeInformacion{
 
  
 object rial inherits FuenteDeInformacion {
- 	override method pedirInformacion () {
-  		return #{"Escandalo"}
+ 	 override method pedirInformacion () {
+  		return 'Escandalo'
   }
  	
  }
@@ -38,8 +35,8 @@ object rial inherits FuenteDeInformacion {
 
 object tinelli inherits FuenteDeInformacion{
 
- override method pedirInformacion () {
-  	return #{"Toto"}
+  override method pedirInformacion () {
+  	return 'Toto'
   }
  
  }

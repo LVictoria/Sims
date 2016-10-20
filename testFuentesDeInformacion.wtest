@@ -1,0 +1,32 @@
+import sims.*
+import personalidades.*
+import fuentesDeInformacion.*
+ 
+ test "Tinelli le provee informacion a un Sim"{
+	const ernesto = new Sim("Hombre",19,90,buenazo,"Mujer")
+	tinelli.proveerInformacion(ernesto)
+	assert.equals(#{'Toto'},ernesto.informacion())
+}
+
+test "Rial le provee informacion a un Sim"{
+	const ernesto = new Sim("Hombre",19,90,buenazo,"Mujer")
+	rial.proveerInformacion(ernesto)
+	assert.equals(#{'Escandalo'},ernesto.informacion())
+}
+
+test "Un libro le provee informacion a un Sim"{
+	const ernesto = new Sim("Hombre",19,90,buenazo,"Mujer")
+	const libro = new Libro(#{'capitulo1'})
+	libro.proveerInformacion(ernesto)
+	assert.equals(#{'capitulo1'},ernesto.informacion())
+}
+
+test "Un Sim le provee informacion a un Sim"{
+	const pedro = new Sim("Hombre",20,60,buenazo,"Mujer")
+	const ernesto = new Sim("Hombre",19,90,buenazo,"Mujer")
+	const maria = new Sim("Mujer",23,40,superficial,"Mujer")
+	maria.nuevaInformacion('contenidos de pdep')
+	pedro.agregarChismeDe(maria)
+	pedro.proveerInformacion(ernesto)
+	assert.equals(#{'contenidos de pdep'},ernesto.informacion())
+}

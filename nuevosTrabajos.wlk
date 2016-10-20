@@ -1,14 +1,14 @@
 import trabajos.*
 
 class AburridoHastaLaMuerte inherits Trabajo {
-	var nFeclidadPerdida
+	var n 
 	
 	constructor(dinero,nivelDeFelicidad,unaCantidad) = super (dinero,nivelDeFelicidad) {
-		nFeclidadPerdida = unaCantidad
+		n = unaCantidad
 	}
  		
 	override method cambiarFelicidad(empleado) {
-		empleado.aumentarFelicidad(- nivelDeFelicidad * nFeclidadPerdida )
+		empleado.aumentarFelicidad(- nivelDeFelicidad * n )
 	}
 }
 

@@ -13,7 +13,6 @@ object interesado {
 	method prestar(simDeudor, dinero){
  		return simDeudor.dinero() < dinero
  	}
- 	method trabajaConSusAmigos(unSim) {return true}
 }
 
 object superficial {
@@ -30,7 +29,6 @@ object superficial {
 	method prestar(simDeudor, dinero){
  		return true
  	}
- 	method trabajaConSusAmigos(unSim) {return true}
 	
 }
 
@@ -69,5 +67,4 @@ object peleadoConLaVida {
 	method prestar(simDeudor, dinero){
  		return true
  	}
- 	method trabajaConSusAmigos(unSim) {return true}
 }
