@@ -16,5 +16,9 @@ test "Hacer que un Vim cumpla años " {
 
 }
 
-// Si un Vim muerde a un Sim y este se convierte en vampiro, deberiamos hacer un override del metodo cumplir años y,
-//  a demás se debería cambiar la edad actual del sim para que siempre tenga 18 años.
+// Si un vim muerde a un sim, se debe realizar los siguientes cambios
+//se podría hacer por composición, que haya un atributo que represente si es un sim o no,
+// que apunte a un objeto que pertenezca a una de dos clases(una para vims y una para no vims). 
+//Esas dos clases comparten la interfaz cumplirAnios, y la de los vims no hace nada. 
+//De ahora en más los sims en su método de cumplir años tienen nombreDeAtributo.cumplirAnios().
+// El método morder(sim) que tienen los vims hacen sim.setterDelAtributo(new NombreClaseVim)
