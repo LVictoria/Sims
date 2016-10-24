@@ -23,7 +23,7 @@ class Sim inherits FuenteDeInformacion {
 	var sexoPreferencia
 	var informaciones = #{}
 	var backup = #{}
-	var chismes=#{}
+	var chismes = #{}
 	var estadoDeAnimo = normal
 	var estadoDeCelos
 	
@@ -339,8 +339,6 @@ class Sim inherits FuenteDeInformacion {
 	method difundirInformacion(unConocimiento) {
 		if(not(self.tieneElConocimiento(unConocimiento))){
 			amigos.forEach({amigo => amigo.nuevaInformacion(unConocimiento)})
-		}
-		else { 
 			self.nuevaInformacion(unConocimiento)
 		}
 	}	
@@ -356,7 +354,7 @@ class Sim inherits FuenteDeInformacion {
 	
 		
 	method desparramarChisme(){
-		self.difundirInformacion(chismes.anyOne())
+		self.difundirInformacion(self.pedirInformacion())
 	}
 	
 	override method pedirInformacion(){
